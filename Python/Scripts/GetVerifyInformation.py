@@ -76,7 +76,7 @@ if __name__ =='__main__':
                         print url_build
                         print getBuildcontent(url_build)
                         a1 = Job[j]
-                                                a2 = BuildN[i]
+                        a2 = BuildN[i]
                         a3 = getBuildcontent(url_build)[0]
                         a4 = getBuildcontent(url_build)[1]/(1000*60)
                         a5 = getBuildcontent(url_build)[2]
