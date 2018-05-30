@@ -1,0 +1,14 @@
+##批量更改root账号密码
+
+前提：ansible server上要设置操作的服务器免密码登录
+方法：
+ansible test -m shell -a 'echo user:password | chpasswd'
+
+说明：
+1、	要先配置好ansible
+2、	在redhat的系统中passwd 有—stdin参数，但是在ubuntu系统下passwd命令没有—stdin
+3、	Chpasswd中账号中涉及特殊字符，需要进行转义
+
+验证是否密码已经更改：
+对比密码写入一行是否一致，然后再抽样登录几台即可。
+
