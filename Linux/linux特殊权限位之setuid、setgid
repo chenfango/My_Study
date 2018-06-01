@@ -1,0 +1,210 @@
+摘抄至：http://blog.51cto.com/taokey/1329992
+
+我们登陆到系统之后,创建一个普通文件或者目录的时候,会有一个默认的权限。普通文件是644,目录文件是755,想必大家都知道这个是由umask这个值决定的。我们可以直接执行umask命令查看，linux系统默认的umask值是0022。想改变创建文件默认的权限，我们直接修改umask就可以，但是一般的权限都是通过777-022得到的默认权限位。022前面的这个0是什么呢？第一个0就是特殊权限位，下边我们就来跟大家说一下setuid、setgid和sticky这个三个特殊权限位。
+suid,set uid：在一个程序或命令上添加setuid以后（u+s）,这样属主有了s权限，意味着任何用户在执行此程序时,其进程的属主不再是发起者本人,而是这个程序的属主。最典型的一个例子就是passwd这个命令；
+普通用户运执行passwd命令来修改自己的密码，其实最终更改的是/etc/passwd这个文件。
+我们知道/etc/passwd文件是用户管理的配置文件，只有root权限的用户才能更改。
+
+
+
+[root@Vmware5 ~]# ls -l /etc/passwd
+-rw-r--r--. 1 root root 981 Oct 25 01:00 /etc/passwd
+
+按照常规的逻辑思维，普通用户是修改不了/etc/passwd此文件的，但是在passwd这个命令上添加了setuid这个特殊权限位，普通账号临时变成root，就能间接修改自己账号的密码了。
+
+
+[root@Vmware5 ~]# ls -l /usr/bin/passwd  (s就是suid位)
+-rwsr-xr-x. 1 root root 30768 Feb 22  2012 /usr/bin/passwd
+ 设置setuid的方法：（其实前边提到过了参数是u+s）
+
+
+chmod u(+|-)s /path/somefile
+chmod 4664 /path/somefile
+注意：
+s:表示属主原来有执行权限
+S:表示属主原来没有执行权限
+实例演示：
+
+添加一个名字为taokey的普通用户
+
+
+[root@Vmware5 ~]# useradd taokey
+把/etc/fsatb文件拷贝到/tmp目录下一份
+
+[root@Vmware5 ~]# cp /etc/fstab /tmp/
+[root@Vmware5 ~]# cd /tmp/
+查看/tmp目录下fstab文件的属性
+
+
+[root@Vmware5 tmp]# ll fstab
+-rw-r--r--. 1 root root 899 Oct 25 00:16 fstab
+把其他用户的读权限给去掉
+
+
+[root@Vmware5 tmp]# chmod o-r fstab
+[root@Vmware5 tmp]# ll fstab
+-rw-r-----. 1 root root 899 Oct 25 00:16 fstab
+切换到普通用户taokey
+
+[root@Vmware5 tmp]# su - taokey
+执行cat命令，看下是否可以查看fstab文件
+
+
+[taokey@Vmware5 ~]$ cat /tmp/fstab
+cat: /tmp/fstab: Permission denied
+由于other去掉了r权限，所有提示cat被拒绝
+
+为了保留原始环境，把cat命令拷贝到/tmp目录一份
+
+
+[root@Vmware5 ~]# cp /bin/cat  /tmp/
+[taokey@Vmware5 tmp]$ ls -l fstab cat
+-rwxr-xr-x. 1 root root 45224 Oct 25 00:21 cat
+-rw-r-----. 1 root root   899 Oct 25 00:16 fstab
+[taokey@Vmware5 tmp]$ ./cat fstab
+./cat: fstab: Permission denied
+[taokey@Vmware5 tmp]$ exit
+logout
+特换到root用户，添加setuid权限
+
+[root@Vmware5 tmp]# chmod u+s cat
+添加完s权限位之后，再切换到普通用户taokey，测试是否可以成功执行cat命令
+
+[root@Vmware5 tmp]# su - taokey
+[taokey@Vmware5 ~]$ cd /tmp/
+[taokey@Vmware5 tmp]$ ./cat fstab
+#
+# /etc/fstab
+# Created by anaconda on Thu Oct 24 23:49:23 2013
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+UUID=b49ee2b3-75aa-4227-a9ff-5d0d990af0fd /                       ext4    defaults        1 1
+UUID=3a69daa4-b393-4694-abbb-b856345b376d /boot                   ext4    defaults        1 2
+UUID=34f85ed8-5f68-4fdc-8aa0-e50d2f9f012e /home                   ext4    defaults        1 2
+UUID=95d97c70-9291-499b-ac16-a38508a85e4d swap                    swap    defaults        0 0
+tmpfs                   /dev/shm                tmpfs   defaults        0 0
+devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
+sysfs                   /sys                    sysfs   defaults        0 0
+proc                    /proc                   proc    defaults        0 0
+ 切换到普通用户之后，可以成功执行cat命令，查看/tmp/fstab文件，就是因为tmp目录下cat这个命令上添加了s权限位。
+
+
+[taokey@Vmware5 tmp]$ ll cat
+-rwsr-xr-x. 1 root root 45224 Oct 25 00:21 cat
+注意：设置suid这个特殊权限很危险，不到万不得已，做好还是不要使用。
+
+
+
+2.Sgid,Set id,属组有s权限，意思就是执行此程序时，此进程的属组不再是运行者本人所属的基本组，而是此程序文件的属组。Set gid权限如果给文件设置，是让运行此文件的其它用户具有这个文件的属组特性；给目录设置Set gid权限，任何用户在该目录下创建的文件，则该文件属组都和目录的属组一致。
+
+工作中经常会遇到这样一个问题？
+
+运维和开发同属于技术部，用户同属于一个组，文件在一个目录中，运维人员和开发人员可以相互之间访问自己的文件，要是一个一个修改属组就有点麻烦，这时候用sgid就会很方便的解决这个问题。
+
+
+
+例子：
+[root@Vmware5 tmp]# usermod -a -G mygrp xen
+[root@Vmware5 tmp]# usermod -a -G mygrp kvm
+[root@Vmware5 tmp]# mkdir /tmp/test
+[root@Vmware5 tmp]# ls -ld /tmp/test/
+drwxr-xr-x. 2 root root 4096 Oct 25 00:48 /tmp/test/
+[root@Vmware5 tmp]# chmod g+w /tmp/test
+[root@Vmware5 tmp]# ls -ld /tmp/test/
+drwxrwxr-x. 2 root root 4096 Oct 25 00:48 /tmp/test/
+[root@Vmware5 tmp]# chown :mygrp /tmp/test
+[root@Vmware5 tmp]# ls -ld /tmp/test
+drwxrwxr-x. 2 root mygrp 4096 Oct 25 00:48 /tmp/test
+[root@Vmware5 ~]# su - xen
+[xen@Vmware5 ~]$ cd /tmp/test
+[xen@Vmware5 test]$ touch a.xen
+[xen@Vmware5 test]$ ls -l
+total 0
+-rw-rw-r--. 1 xen xen 0 Oct 25 00:50 a.xen
+[root@Vmware5 ~]# su - kvm
+[kvm@Vmware5 ~]$ cd /tmp/test
+[kvm@Vmware5 test]$ touch a.kvm
+[kvm@Vmware5 test]$ ls -l
+total 0
+-rw-rw-r--. 1 kvm kvm 0 Oct 25 00:51 a.kvm
+-rw-rw-r--. 1 xen xen 0 Oct 25 00:50 a.xen
+kvm用户想往xen创建的文件a.xen中写东西，但是被拒绝了。
+
+
+[kvm@Vmware5 test]$ echo "hello" >>a.xen
+-bash: a.xen: Permission denied
+咱们在用root，给/tmp/test文件添加一个sgid权限位，然后再测试下。
+
+
+[root@Vmware5 ~]# chmod g+s /tmp/test
+[root@Vmware5 ~]# ls -ld /tmp/test
+drwxrwsr-x. 2 root mygrp 4096 Oct 25 00:51 /tmp/test
+切换到xen普通用户
+
+
+
+[root@Vmware5 ~]# su - xen
+[xen@Vmware5 test]$ touch b.xen
+[xen@Vmware5 test]$ ll b.xen
+-rw-rw-r--. 1 xen mygrp 0 Oct 25 01:01 b.xen
+[root@Vmware5 ~]# su - kvm
+[kvm@Vmware5 ~]$ echo "hello" >>b.xen
+[kvm@Vmware5 ~]$ cat b.xen
+hello
+[kvm@Vmware5 ~]$ touch b.kvm
+[root@Vmware5 ~]# su - xen
+[xen@Vmware5 ~]$ cd /tmp/test/
+[xen@Vmware5 test]$ echo "My name is taoyake." >>b.kvm
+[xen@Vmware5 test]$ cat b.kvm
+My name is taoyake.
+可以成功写进去，这个就是因为在/tmp/test文件设置了sgid权限位
+
+但是这个不但可以能成功写进去，还可以删除文件，我们只能自己删除自己的文件，不想让其他用户删除我们的文件，这时候怎么办呢？
+
+
+例如：
+[xen@Vmware5 test]$ rm b.kvm
+[xen@Vmware5 test]$ ll
+total 0
+-rw-rw-r--. 1 kvm kvm   0 Oct 25 00:51 a.kvm
+-rw-rw-r--. 1 xen xen   0 Oct 25 00:50 a.xen
+-rw-rw-r--. 1 xen mygrp 0 Oct 25 01:01 b.xen
+
+
+3.这时候就用到了粘滞位，t,sticky,附加other的权限上，表现为t。
+
+chmod o+|-t /path/somefile
+
+
+
+实例操作：
+[root@Vmware5 ~]# ls -ld /tmp/test
+drwxrwsr-t. 2 root mygrp 4096 Oct 25 01:10 /tmp/test
+[xen@Vmware5 test]$ ls
+a.kvm  a.xen  b.xen  c.kvm
+[xen@Vmware5 test]$ echo "beyond" >>c.kvm
+[xen@Vmware5 test]$ cat c.kvm
+beyond
+[xen@Vmware5 test]$ echo "">c.kvm
+[xen@Vmware5 test]$ cat c.kvm
+[xen@Vmware5 test]$ rm -rf c.kvm
+rm: cannot remove `c.kvm': Operation not permitted
+可以添加和任意修改其他用户的文件，就是不能删除其他用户的文件，自己可以删除自己创建的文件。
+
+
+
+[kvm@Vmware5 test]$ touch c.kvm
+[kvm@Vmware5 test]$ ls
+a.kvm  a.xen  b.xen  c.kvm
+[kvm@Vmware5 test]$ rm c.kvm
+[kvm@Vmware5 test]$ ls
+a.kvm  a.xen  b.xen
+[xen@Vmware5 test]$ ll
+total 0
+-rw-rw-r--. 1 kvm kvm   0 Oct 25 00:51 a.kvm
+-rw-rw-r--. 1 xen xen   0 Oct 25 00:50 a.xen
+-rw-rw-r--. 1 xen mygrp 0 Oct 25 01:01 b.xen
+表示方法: 
+将三个特殊位的用八进制数值表示，放于 u/g/o 位之前。其中 suid :4 sgid:2 sticky:1.
