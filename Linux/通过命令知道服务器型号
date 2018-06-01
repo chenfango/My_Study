@@ -1,0 +1,16 @@
+
+方法一：厂商/型号/ID
+# dmidecode |grep -A4 'System Information' ##说明，不同的尝试可能-A 后面的行数不一样，建议先dmidecode下
+System Information
+	Manufacturer: HP
+	Product Name: ProLiant DL380p Gen8
+	Version: Not Specified
+	Serial Number: 6CU4090CH4  
+方法二
+# grep 'DMI' /var/log/dmesg
+[    0.000000] DMI: HP ProLiant BL460c Gen8, BIOS I31 03/01/2013
+
+
+# dmidecode | grep "Product"
+	Product Name: ProLiant DL380p Gen8
+	String 2: Product ID: 653200-B21
