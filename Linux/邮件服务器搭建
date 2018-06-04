@@ -1,0 +1,21 @@
+方式一:
+mail
+直接选择默认安装：
+# apt install mailutils
+选择Internet site
+然后出来的网址是以后发出去的网址
+
+安装s-nail
+# apt-get install s-nail
+配置s-nail
+vi /etc/s-nail.rc
+追加如下内容
+# s-it-mode
+
+set smtp-use-starttls
+set ssl-verify=ignore
+set smtp=smtp.domain:587
+set from=mailname
+set smtp-auth-user=mailname
+set smtp-auth-password=XXXxx
+set smtp-auth=login
