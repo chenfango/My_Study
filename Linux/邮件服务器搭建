@@ -5,6 +5,8 @@ mail
 选择Internet site
 然后出来的网址是以后发出去的网址
 
+这部分选择性安装，原因：mail使用的是25端口，25端口不带认证；故而有些公司会进行屏蔽。
+这里选择s-nail 软件进行端口转化，使用587端口，并且同时设置账号和密码
 安装s-nail
 # apt-get install s-nail
 配置s-nail
