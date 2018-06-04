@@ -1,0 +1,7 @@
+Ubuntu16.04 系统安装后，root账号无法登录
+
+vi /etc/ssh/sshd_config
+将以下行注释
+#PermitRootLogin prohibit-password
+改为：
+PermitRootLogin yes
