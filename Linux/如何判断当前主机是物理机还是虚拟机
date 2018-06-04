@@ -1,0 +1,8 @@
+Windows：
+在CMD里输入：Systeminfo | findstr /i "System Model"
+如果System Model：后面含有Virutal就是虚拟机，其他都是物理机
+或者用powershell命令：get-wmiobject win32_computersystem | fl model
+Linux：
+在bash里输入：dmidecode -s system-product-name
+或者lshw -class system
+或者dmesg | grep -i virtual
