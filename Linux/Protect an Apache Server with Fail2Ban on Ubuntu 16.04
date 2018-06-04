@@ -1,0 +1,115 @@
+Protect an Apache Server with Fail2Ban on Ubuntu 16.04
+
+学习网址：https://www.digitalocean.com/community/tutorials/how-to-protect-an-apache-server-with-fail2ban-on-ubuntu-14-04
+思路：
+1、搭建有邮件服务器
+2、安装apache
+3、安装fail2ban，并进行配置
+
+Step 1 ：搭建邮件服务器
+https://github.com/HelenaZheng/My_Study/blob/master/Linux/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA
+
+Step 2 安装apache
+sudo apt-get install apache2
+
+step3 配置fail2ban
+
+sudo apt-get install fail2ban
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+vi /etc/fail2ban/jail.local
+##修改如下内容
+[DEFAULT]
+destemail = youraccount@email.com
+sender = XXXX
+mta = mail ##之前要先搭建mail服务，可查看
+action = %(action_mwl)s
+
+##配置apache
+[apache-auth]
+
+enabled = true
+port     = http,https
+#port     = 80
+#logpath  = %(apache_error_log)s
+logpath  = /var/log/apache2/error.log
+
+
+[apache-badbots]
+# Ban hosts which agent identifies spammer robots crawling the web
+# for email addresses. The mail outputs are buffered.
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_access_log)s
+bantime  = 172800
+maxretry = 1
+
+
+[apache-noscript]
+
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_error_log)s
+maxretry = 6
+
+
+[apache-overflows]
+
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_error_log)s
+maxretry = 2
+
+
+[apache-nohome]
+
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_error_log)s
+maxretry = 2
+
+
+[apache-botsearch]
+
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_error_log)s
+maxretry = 2
+
+
+[apache-fakegooglebot]
+
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_access_log)s
+maxretry = 1
+ignorecommand = %(ignorecommands_dir)s/apache-fakegooglebot <ip>
+
+
+[apache-modsecurity]
+
+enabled = true
+port     = http,https
+logpath  = /var/log/apache2/error.log
+#logpath  = %(apache_error_log)s
+maxretry = 2
+
+[apache-shellshock]
+
+enabled = true
+port    = http,https
+logpath  = /var/log/apache2/error.log
+#logpath = %(apache_error_log)s
+maxretry = 1
+
+## 重启fail2ban服务
+sudo service fail2ban restart
+
+## 验证配置是否生效
+sudo fail2ban-client status
+
