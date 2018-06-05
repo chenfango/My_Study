@@ -1,0 +1,12 @@
+1、登录
+登录一台linux serer，输入如下指令
+# mysql -u username -p'password' -h serverIP -P 3306 -D dataname
+
+2、查询
+查询整个表
+mysql> select * from 表名;
+如：mysql> select * from ibuildmaster.ali_ip_traffic_log;
+
+查询表里某个字段
+mysql> select 字段 from 表名;
+如：mysql> select ip from ibuildmaster.ali_ip_traffic_log;
