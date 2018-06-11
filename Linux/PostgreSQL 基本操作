@@ -19,13 +19,29 @@ Type "help" for help.
 
 postgres=# 
 
-创建数据库
+更改控制台登录账号密码
+\password postgres
 
-创建用户
+创建数据库用户和数据库
 
-用户授权
+##创建数据库用户
+CREATE USER dbuser WITH PASSWORD 'password';
+##创建数据库
+CREATE DATABASE exampledb OWNER dbuser;
+##将数据库授权给数据库用户
+GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
+##查看数据库是否创建好
+postgres=# \l
+##退出控制台
+postgres=# \q
 
 
+方法二:使用shell命令行
+
+添加新用户和新数据库，除了在PostgreSQL控制台内，还可以在shell命令行下完成。
+这是因为PostgreSQL提供了命令行程序createuser和createdb。还是以新建用户dbuser和数据库exampledb为例。
+
+但是在这里因为很多命令还是需要切换到数据库进行操作，所以此种方法不推荐。
 
 附录：
 \h：查看SQL命令的解释，比如\h select。
