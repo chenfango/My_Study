@@ -1,0 +1,16 @@
+登录数据库：命令行方式
+
+有两种方式，一是直接在系统shell下执行psql命令；而是先进入psql环境，然后再连接数据库。
+
+方式一：直接登录
+执行命令：psql -h 172.16.35.179 -U username -d dbname ，其中username为数据库用户名，
+dbname为要连接的数据库名，执行后提示输入密码如下：
+Password for user username: （在此输入密码）
+
+输入密码后即可进入psql环境了。
+
+方式二：切换数据库
+有时候需要在psql环境下切换数据库，此时执行如下psql命令：
+\c dbname username serverIP port
+其中除了数据库名外，其他的参数都是可选的，如果使用默认值可以使用-作为占位符
+执行这个命令后，也是提示输入密码。
