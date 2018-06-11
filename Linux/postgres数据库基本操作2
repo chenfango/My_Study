@@ -11,6 +11,11 @@ Password for user username: （在此输入密码）
 
 方式二：切换数据库
 有时候需要在psql环境下切换数据库，此时执行如下psql命令：
-\c dbname username serverIP port
+postgres=#\c dbname username serverIP port
 其中除了数据库名外，其他的参数都是可选的，如果使用默认值可以使用-作为占位符
 执行这个命令后，也是提示输入密码。
+
+查看数据库存在的用户及密码
+
+postgres=# select * from pg_user;
+postgres=# select * from pg_shadow;
