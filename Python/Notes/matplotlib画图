@@ -45,4 +45,5 @@ plt.title("A simple plot")
 白色 - 'w' 线： 直线 - '-' 虚线 - '--' 点线 - ':' 点划线 - '-.' 常用点标记 点 - '.' 像素 - ',' 圆 - 'o' 方形 - 's' 三角形 - '^' 
 
 链接：
-
+链接：
+https://matplotlib.org/api/markers_api.html
