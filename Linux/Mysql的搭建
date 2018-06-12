@@ -1,0 +1,9 @@
+
+# apt-get install mysql-server
+##安装过程中会提示输入数据库的root账号密码
+# apt-get install mysql-client
+# apt-get install libmysqlclient-dev
+
+安装完成后，查看是否安装成功，查看是否有该服务即可
+# netstat -tap | grep mysql
+tcp        0      0 localhost:mysql         *:*                     LISTEN      17113/mysqld 
