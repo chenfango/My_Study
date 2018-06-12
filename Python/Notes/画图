@@ -1,3 +1,32 @@
 https://matplotlib.org/gallery/index.html
 examples:
 https://matplotlib.org/gallery/api/watermark_text.html#sphx-glr-gallery-api-watermark-text-py
+
+在Linux客户端，没有显示
+
+1、解决Linux终端没有GUI
+
+在开始之前添加以下行：
+>>> import matplotlib as mpl
+>>> mpl.use('Agg')
+
+example:
+##解决Linux终端没有GUI，无法显示图片
+>>> import matplotlib as mpl
+>>> mpl.use('Agg')
+##导入库
+>>> import numpy as np  
+>>> import matplotlib.pyplot as plt
+##X轴，y轴
+>>> x=[0,1]  
+>>> y=[0,1] 
+##创建绘图对象
+>>> plt.figure() 
+<matplotlib.figure.Figure object at 0x7f0993a533d0>
+##根据当地按绘图对象进行绘图
+>>> plt.plot(x,y)
+[<matplotlib.lines.Line2D object at 0x7f0990a182d0>]
+##保存图片
+>>> plt.savefig('/root/easyplot.jpg')
+
+问题：Linux终端无法显示，需要将图片导入到windows终端显示
