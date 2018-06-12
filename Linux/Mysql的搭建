@@ -7,3 +7,29 @@
 安装完成后，查看是否安装成功，查看是否有该服务即可
 # netstat -tap | grep mysql
 tcp        0      0 localhost:mysql         *:*                     LISTEN      17113/mysqld 
+
+查询有哪些数据库
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| bugzilla           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------
+
+创建数据库
+mysql> create database mydb;
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
