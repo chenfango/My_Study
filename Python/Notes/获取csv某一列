@@ -1,0 +1,5 @@
+import pandas as pd
+pd.read_csv('filename',usecols=[列数]) ## 注意这里是从第0列开始的
+
+y = pd.read_csv('/root/queue_sh.csv',usecols=[0])
+    
