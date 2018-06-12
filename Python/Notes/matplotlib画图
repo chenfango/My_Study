@@ -10,6 +10,10 @@ https://matplotlib.org/gallery/api/watermark_text.html#sphx-glr-gallery-api-wate
 >>> import matplotlib as mpl
 >>> mpl.use('Agg')
 
+2、需要的模块
+ import numpy as np  
+ import matplotlib.pyplot as plt
+
 example:
 ##解决Linux终端没有GUI，无法显示图片
 >>> import matplotlib as mpl
