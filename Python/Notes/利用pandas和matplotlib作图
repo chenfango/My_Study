@@ -1,0 +1,8 @@
+Notes：如果是Linux终端，需要先解决Linux终端无GUI问题
+>>> import matplotlib as mpl
+>>> mpl.use('Agg')
+
+需要模块：
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
