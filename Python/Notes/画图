@@ -24,8 +24,12 @@ example:
 >>> plt.figure() 
 <matplotlib.figure.Figure object at 0x7f0993a533d0>
 ##根据当地按绘图对象进行绘图
->>> plt.plot(x,y)
+>>> plt.plot(x,y,"--",color="red",linewidth=2)
 [<matplotlib.lines.Line2D object at 0x7f0990a182d0>]
+##添加各轴名称
+plt.xlabel("time(s)")  
+plt.ylabel("value(m)")  
+plt.title("A simple plot")  
 ##保存图片
 >>> plt.savefig('/root/easyplot.jpg')
 
