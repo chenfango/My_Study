@@ -1,0 +1,9 @@
+link：https://stackoverflow.com/questions/9998298/jenkins-slave-jobs-failing-on-unexpected-termination-of-channel
+
+
+You'll see that error if the Jenkins master loses connectivity with the slave. 
+It could be due to any of the three issues you listed above:
+
+1.Manually killing the slave process
+2.The slave server becoming unavailable
+3.A network problem between the master and the slave
