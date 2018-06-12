@@ -9,6 +9,6 @@ import pandas as pd
 present = pd.read_csv('/root/queue_sh2.csv', sep=' ')
 present_year = present.set_index('Time')
 present_year['length'].plot()
-##为图中线条意义标注，可不用
+##为图中线条意义标注，可不用。图例的参数详细介绍：https://blog.csdn.net/helunqu2017/article/details/78641290
 plt.legend(loc='best')
 plt.savefig('/root/quequ.jpg')
