@@ -1,0 +1,14 @@
+
+import pandas as pd
+import matplotlib as mpl
+mpl.use('Agg')
+import numpy as np  
+import matplotlib.pyplot as plt
+import pandas as pd
+
+present = pd.read_csv('/root/queue_sh2.csv', sep=' ')
+present_year = present.set_index('Time')
+present_year['length'].plot()
+##为图中线条意义标注，可不用
+plt.legend(loc='best')
+plt.savefig('/root/quequ.jpg')
