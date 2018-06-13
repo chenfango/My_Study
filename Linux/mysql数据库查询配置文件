@@ -1,0 +1,6 @@
+## which mysql
+/usr/bin/mysql
+
+# /usr/bin/mysql --verbose --help | grep -A 1 "Default options"
+Default options are read from the following files in the given order:
+/etc/my.cnf /etc/mysql/my.cnf ~/.my.cnf 
