@@ -1,0 +1,30 @@
+链接：https://blog.csdn.net/SCTU_vroy/article/details/53019198
+
+一、判断ubuntu是否开启防火墙
+
+sudo ufw status
+1
+开放防火墙3306端口
+
+sudo ufw allow 3306
+1
+二、查看3306端口是否打开
+
+这里写图片描述 
+注意：红色框框表示3306绑定的ip地址–>未修改前为：127.0.0.1:3306–>即mysql默认绑定localhost，远程访问不了 
+*如果是绑定了127.0.0.1则继续看第三步，否则请跳过第三步
+
+三、修改mysql配置文件，将bind-address = 127.0.0.1注释，开放所有连接
+
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf 
+注释掉#bind-address           = 127.0.0.1
+
+重启mysql 服务
+
+查看是否已经允许全部
+
+mysql> select user,host from user;
++------------------+--------------+
+| user             | host         |
++------------------+--------------+
+| root             | %            |
