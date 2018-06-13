@@ -1,3 +1,10 @@
 配置文件
 
-mysql配置文件为my.cnf
+使用命令show global variables like 'port';查看端口号 
+mysql> show global variables like 'port';  
++---------------+-------+  
+| Variable_name | Value |  
++---------------+-------+  
+| port | 3306 |  
++---------------+-------+  
+1 row in set (0.00 sec)
