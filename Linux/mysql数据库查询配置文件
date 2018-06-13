@@ -4,3 +4,6 @@
 # /usr/bin/mysql --verbose --help | grep -A 1 "Default options"
 Default options are read from the following files in the given order:
 /etc/my.cnf /etc/mysql/my.cnf ~/.my.cnf 
+
+- "/etc/mysql/my.cnf" to set global options,
+- "~/.my.cnf" to set user-specific options.
