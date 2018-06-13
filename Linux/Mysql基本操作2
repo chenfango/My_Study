@@ -1,0 +1,76 @@
+MySQL表的基本操作
+1、	创建表
+CREATE TABLE 表的名字
+(
+列名a 数据类型(数据长度),
+列名b 数据类型(数据长度)，
+列名c 数据类型(数据长度)
+);
+	Example 
+mysql> create table shqueue(Time datetime,JobInqueue int);
+2、	删除表
+DROP TABLE table_name;
+
+3、	查询字段及类型
+mysql> desc shqueue;
+ 
+4、	显示表
+	显示整个表
+	select * from tablename;
+	显示某几列
+	select <列名> from tablename;
+	显示某几行
+	显示前5行
+	select * from <tablename> limit 5;
+	显示第5到第15行
+	select * from <tablename> limit 5,10;
+	显示字段的属性
+	show full columns from <tablename>;
+Mysql中的数据类型介绍：http://www.runoob.com/mysql/mysql-data-types.html
+5、	插入数据
+INSERT INTO 表的名字(列名a,列名b,列名c) VALUES(值1,值2,值3);
+6、	删除数据
+
+DELETE FROM <table_name>
+WHERE condition; ##可选，如果不带where表示删除整个表
+
+mysql> delete from shqueue where JobInqueue = '3';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from shqueue;
+Empty set (0.00 sec)
+
+链接：https://blog.csdn.net/hanxuemin12345/article/details/7818662
+
+删除所有数据，但是保留表
+Truncate：用于删除表内的数据（注：仅删除表内的数据，不删除表本身，相当于Delete语句不写Where子句一样）
+语法：Truncate Table  表名称
+7、	更改表名
+ALTER  TABLE table_name RENAME TO new_table_name
+
+Example:
+mysql> ALTER  TABLE shqueue RENAME TO queue_sh;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| queue_sh       |
+
+8、	增加、删除、变更字段
+增加一个字段
+//增加一个字段，默认为空
+alter table user add COLUMN new1 VARCHAR(20) DEFAULT NULL;
+//增加一个字段，默认不能为空
+alter table user add COLUMN new2 VARCHAR(20) NOT NULL;
+删除一个字段
+//删除一个字段
+alter table user DROP COLUMN new2;
+修改一个字段
+//修改一个字段的类型
+alter table user MODIFY new1 VARCHAR(10); 
+//修改一个字段的名称，此时一定要重新指定该字段的类型
+alter table user CHANGE new1 new4 int;
+
+9、数据筛选整合
