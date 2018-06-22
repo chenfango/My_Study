@@ -1,0 +1,62 @@
+cron模块常用参数
+ backup：对远程主机上的原任务计划内容修改之前做备份
+ cron_file：如果指定该选项，则用该文件替换远程主机上的cron.d目录下的用户的任务计划
+ day：日（1-31，*，*/2,……）
+ hour：小时（0-23，*，*/2，……）
+ minute：分钟（0-59，*，*/2，……）
+ month：月（1-12，*，*/2，……）
+ weekday：周（0-7，*，……）
+ job：要执行的任务，依赖于state=present
+ name：该任务的描述
+ special_time：指定什么时候执行，参数：reboot,yearly,annually,monthly,weekly,daily,hourly
+ state：确认该任务计划是创建还是删除
+ user：以哪个用户的身份执行
+
+添加定时任务
+
+[root@m01 ~]# ansible linuxidc -m cron -a "minute=0 hour=0 job='/bin/sh  /server/scripts/hostname.sh &>/dev/null' name=linuxidc01"
+172.16.1.8 | SUCCESS => {
+    "changed": true,
+    "envs": [],
+    "jobs": [
+     "linuxidc01"
+    ]
+}
+删除定时任务
+
+[root@m01 ~]# ansible linuxidc -m cron -a "minute=00 hour=00 job='/bin/sh  /server/scripts/hostname.sh &>/dev/null' name=linuxidc01 state=absent"
+172.16.1.8 | SUCCESS => {
+    "changed": true,
+    "envs": [],
+    "jobs": []
+}
+只用名字就可以删除
+
+[root@m01 ~]# ansible linuxidc -m cron -a "name=linuxidc01  state=absent"
+172.16.1.31 | SUCCESS => {
+    "changed": true,
+    "envs": [],
+    "jobs": []
+}
+注释定时任务
+
+注意： 注释定时任务的时候必须有job的参数
+
+[root@m01 ~]# ansible linuxidc -m cron -a "name=linuxidc01 job='/bin/sh  /server/scripts/hostname.sh &>/dev/null'  disabled=yes"
+172.16.1.31 | SUCCESS => {
+    "changed": true,
+    "envs": [],
+    "jobs": [
+    "linuxidc01"
+    ]
+}
+取消注释
+
+[root@m01 ~]# ansible linuxidc -m cron -a "name=linuxidc01 job='/bin/sh  /server/scripts/hostname.sh &>/dev/null'  disabled=no"
+172.16.1.41 | SUCCESS => {
+    "changed": true,
+    "envs": [],
+   "jobs": [
+       "linuxidc01"
+    ]
+}
