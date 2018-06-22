@@ -1,0 +1,6 @@
+1、查询哪些用户什么权限
+mysql> use mysql;
+Database changed
+mysql> select host,user,password from user;
+
+2、如何把csv数据导入mysql
