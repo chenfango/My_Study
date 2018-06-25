@@ -1,0 +1,39 @@
+Grfana 安装
+
+官网：http://docs.grafana.org/installation/rpm/
+
+Install Stable
+yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.1.4-1.x86_64.rpm
+
+/etc/init.d/grafana-server restart
+在网页中输入：IP:3000
+默认账号：admin/admin
+配置文件：/etc/grafana/grafana.ini
+
+详情：
+Package details
+•	Installs binary to /usr/sbin/grafana-server
+•	Copies init.d script to /etc/init.d/grafana-server
+•	Installs default file (environment vars) to /etc/sysconfig/grafana-server
+•	Copies configuration file to /etc/grafana/grafana.ini
+•	Installs systemd service (if systemd is available) name grafana-server.service
+•	The default configuration uses a log file at /var/log/grafana/grafana.log
+•	The default configuration specifies an sqlite3 database at /var/lib/grafana/grafana.db
+
+ 
+
+服务重启：
+Start the server (init.d service)
+$ sudo service grafana-server start
+
+加入开机自启动
+$ sudo /sbin/chkconfig --add grafana-server
+Start the server (via systemd)¶
+$ systemctl daemon-reload
+$ systemctl start grafana-server
+$ systemctl status grafana-server
+Enable the systemd service to start at boot
+sudo systemctl enable grafana-server.service
+
+环境配置路径：/etc/sysconfig/grafana-server
+登录日志路径：/var/log/grafana
