@@ -1,0 +1,32 @@
+#!/usr/bin/python
+#encoding=utf-8
+
+import pymysql
+import pymysql.cursors
+import time
+
+def InsertdataInMsql():
+        cur_time   = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        ## Connect to the database
+        dbconn = pymysql.connect(
+                host = "127.0.0.1",
+                port = 3306,
+                database = 'jenkins_log',
+                user = 'root',
+                password = 'xxxxx',
+                charset = 'utf8')
+        ##Insert data
+        try:
+                with dbconn.cursor() as cursor:
+                        cursor.execute("INSERT INTO shqueue (Time, Num) VALUES (%s, %s)", [cur_time,100])
+        except dbconn.Error,e:
+                print "Error %d: %s" %(cur_time,100)
+                sys.exit(1)
+        finally:
+                dbconn.commit()
+                dbconn.close();
+                print ('Data has been inserted')
+
+if __name__ =='__main__':
+
+        InsertdataInMsql()
