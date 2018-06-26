@@ -22,9 +22,11 @@ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
 重启mysql 服务
 
 查看是否已经允许全部
-
+musql> use mysql;
 mysql> select user,host from user;
 +------------------+--------------+
 | user             | host         |
 +------------------+--------------+
 | root             | %            |
+如果显示相应的账号只能在localhost登录，需要进行更改，命令如下：
+mysql> update user set host = '%' where user = 'root';
