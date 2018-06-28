@@ -75,4 +75,8 @@ alter table user MODIFY new1 VARCHAR(10);
 //修改一个字段的名称，此时一定要重新指定该字段的类型
 alter table user CHANGE new1 new4 int;
 
-9、数据筛选整合
+9、修改值：
+Update 语句
+Update 语句用于修改表中的数据。
+语法：
+UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
