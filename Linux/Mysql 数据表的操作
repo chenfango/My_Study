@@ -29,12 +29,10 @@ mysql> desc shqueue;
 	显示字段的属性
 	show full columns from <tablename>;
 Mysql中的数据类型介绍：http://www.runoob.com/mysql/mysql-data-types.html
-5、	插入数据
+5、	插入一条记录
 INSERT INTO 表的名字(列名a,列名b,列名c) VALUES(值1,值2,值3);
-6、	删除数据
-
-DELETE FROM <table_name>
-WHERE condition; ##可选，如果不带where表示删除整个表
+6、	删除一条记录
+DELETE FROM <table_name>WHERE condition; ##可选，如果不带where表示删除整个表
 
 mysql> delete from shqueue where JobInqueue = '3';
 Query OK, 1 row affected (0.00 sec)
@@ -63,9 +61,9 @@ mysql> show tables;
 8、	增加、删除、变更字段
 增加一个字段
 //增加一个字段，默认为空
-alter table user add COLUMN new1 VARCHAR(20) DEFAULT NULL;
+alter table <user> add <COLUMN> VARCHAR(20) DEFAULT NULL;
 //增加一个字段，默认不能为空
-alter table user add COLUMN new2 VARCHAR(20) NOT NULL;
+alter table user add <COLUMN> VARCHAR(20) NOT NULL;
 删除一个字段
 //删除一个字段
 alter table user DROP COLUMN new2;
