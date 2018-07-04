@@ -2,3 +2,9 @@ select job, count(job)from jen group by job;
 
 
 select DATE_FORMAT(start_time, '%Y-%m-%d')as day, count(job) as job_count from jen Group by day;
+select 
+now() as time, 
+DATE_FORMAT(start_time, '%m-%d')as day, 
+count(job) as job_count 
+from jen 
+Group by day;
