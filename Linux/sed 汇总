@@ -1,3 +1,6 @@
 知道具体行数插入
-
+sed -i 'N<行数>i<需要替换的内容>' 文件名
 sed -i "1iJobname,NodeNumber,Result,Buildtime,StartTime,project,slave" /tmp/jenkins.csv
+
+行首添加
+sed -i 's/^/<添加的内容>&/g' 文件名
