@@ -1,3 +1,13 @@
+原理：
+直接进行mysql 语句导入时需要进行如下操作：
+LOAD DATA INFILE 'csv_file'
+IGNORE INTO TABLE table_name
+CHARACTER SET UTF8
+FIELDS TERMINATED BY ';'
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+
+
 #!/usr/bin/python
 #coding=utf-8
 
