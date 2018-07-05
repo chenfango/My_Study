@@ -8,46 +8,55 @@ OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 
 
-#!/usr/bin/python
+#!/bin/usr/python
 #coding=utf-8
 
 import csv
-import sys
-import codecs
-import MySQLdb
 import time
-TT = time.strftime("%Y-%m-%d", time.localtime())
-reload(sys)
-sys.setdefaultencoding('utf-8')
+import MySQLdb
+import codecs
+import sys
 
-#csv_filename=sys.argv[1]
-csv_filename="/log/Jenkins/jenkins_"+TT+".csv"
-#print csv_filename
-database='xxxx'
-table_name='xxxx'
+def get_conn(List):
+        conn=MySQLdb.connect(
+                host=List[0],
+                port=3306,
+                user=List[1],
+                passwd=List[2],
+                db=List[3])
+        return conn
 
-file=codecs.open(csv_filename,'r','utf-8')
-reader=file.readline()
-b=reader.split(',')
-colum=''
-for a in b:
-        colum=colum+a+' varchar(255),'
-colum=colum[:-1]
-create='create table if not exists '+table_name+' '+'('+colum+')'+' DEFAULT CHARSET=utf8'
-data='LOAD DATA LOCAL INFILE \''+csv_filename+'\' INTO TABLE '+table_name +' character set utf8 FIELDS TERMINATED BY \',\' ENCLOSED BY \'\"\' LINES TERMINATED BY \''+r'\r\n'+'\' IGNORE 1 LINES;'
+def read_csv_tomysql(csv_filename,table_name):
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        file=codecs.open(csv_filename,'r','utf-8')
+        reader=file.readline()
+        b=reader.split(',')
+        colum=''
+        for a in b:
+                colum=colum+a+' varchar(255),'
+        colum=colum[:-1]
+        create='create table if not exists '+table_name+' '+'('+colum+')'+' DEFAULT CHARSET=utf8'
+        data='LOAD DATA LOCAL INFILE \''+csv_filename+'\' INTO TABLE '+table_name +' character set utf8 FIELDS TERMINATED BY \',\' ENCLOSED BY \'\"\' LINES TERMINATED BY \''+r'\r\n'+'\' IGNORE 1 LINES;'
+        e=unicode(data,'utf8')
 
-e=unicode(data,'utf8')
-    user='root',
-    passwd='xxxx',
-    db=database)
-conn.set_character_set('utf8')
-cursor=conn.cursor()
-cursor.execute('SET NAMES utf8;')
-cursor.execute('SET character_set_connection=utf8;')
-cursor.execute(create)
-cursor.execute(e)
-cursor.rowcount
+        conn=get_conn(List)
+        cursor=conn.cursor()
+        conn.set_character_set('utf8')
+        cursor.execute('SET NAMES utf8;')
+        cursor.execute('SET character_set_connection=utf8;')
+        cursor.execute(create)
+        cursor.execute(e)
+        cursor.rowcount
 
-conn.commit()
-cursor.close()
-print('OK')
+        conn.commit()
+        cursor.close()
+        print('OK')
+
+if __name__ == '__main__':
+        List=['xxxx','xxxx','xxxx','xxxx']
+        get_conn(List)
+        TT=time.strftime("%Y-%m-%d", time.localtime())
+        csv_filename="/log/Jenkins/jenkins_"+TT+".csv"
+        table_name='xxx'
+        read_csv_tomysql(csv_filename,table_name)
