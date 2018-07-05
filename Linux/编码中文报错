@@ -1,0 +1,18 @@
+
+vi /etc/default/locale
+
+将其中的中文改为英文
+
+将其生效：
+$ sudo vi /etc/profile
+
+按a或i进入编辑模式
+
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+
+按Esc键退出编辑模式
+
+:wq (保存并退出)
+
+$ source /etc/profile
