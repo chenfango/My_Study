@@ -24,7 +24,7 @@ def OPS_to_mysql(sql,table_name):
         print('OK')
 
 if __name__ == '__main__':
-        List=['10.29.35.14','root','123456','jenkins_log']
+        List=['127.0.0.0','user','password','database']
         get_conn(List)
         table_name='tt'
         ##用sql执行的语句
