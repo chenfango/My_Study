@@ -9,7 +9,18 @@ CREATE TABLE 表的名字
 列名c 数据类型(数据长度)
 );
 e.g
-mysql> create table shqueue(Time datetime,JobInqueue int);
+create table verify_log( 
+job varchar(255), 
+nodeNum int, 
+result tinytext, 
+build_time float, 
+start_time timestamp, 
+buildlist longtext, 
+slave tinytext, 
+biuld_type varchar(255), 
+primary key (job,nodeNum,start_time)
+);
+
 2、	删除表
 DROP TABLE table_name;
 
