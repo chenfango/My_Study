@@ -87,11 +87,17 @@ Update 语句用于修改表中的数据。
 语法：
 UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
 
-10、复制整个表的结构和数据，其中primary key不是表的结构需要重新添加
+10、复制表
 
+复制整个表的结构和数据，其中primary key不是表的结构需要重新添加
 create table <new table> select * from <new table>;
-e.g
-create table jen2 select * from jen;
+e.gcreate table jen2 select * from jen;
+
+只复制表结构
+CREATE TABLE 新表 SELECT * FROM 旧表 WHERE 1=2
+
+复制旧表数据到新表（两表结构不一样）
+INSERT INTO 新表(字段1,字段2,…….) SELECT 字段1,字段2,…… FROM 旧表
 
 mysql> desc jen2;
 +------------+--------------+------+-----+-------------------+-----------------------------+
