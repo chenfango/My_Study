@@ -1,0 +1,32 @@
+#!/bin/usr/python
+#coding=utf-8
+
+import csv
+import time
+import MySQLdb
+
+##connect to db
+def get_conn(List):
+        conn=MySQLdb.connect(
+                host=List[0],
+                port=3306,
+                user=List[1],
+                passwd=List[2],
+                db=List[3])
+        return conn
+##execute  sql
+def OPS_to_mysql(sql,table_name):
+        conn=get_conn(List)
+        cursor=conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        cursor.close()
+        print('OK')
+
+if __name__ == '__main__':
+        List=['10.29.35.14','root','123456','jenkins_log']
+        get_conn(List)
+        table_name='tt'
+        ##用sql执行的语句
+        sql='delete from ' +table_name+' where starttime < "2018-03-01 23:59:59"'
+        OPS_to_mysql(sql,table_name)
