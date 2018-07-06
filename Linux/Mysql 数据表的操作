@@ -8,6 +8,8 @@ CREATE TABLE 表的名字
 列名b 数据类型(数据长度)，
 列名c 数据类型(数据长度)
 );
+
+注意数据类型时候i：CHAR 类型的一个变体是 VARCHAR 类型。它是一种可变长度的字符串类型，并且也必须带有一个范围在 0-255 之间的指示器。
 e.g
 create table verify_log( 
 job varchar(255), 
