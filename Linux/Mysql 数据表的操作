@@ -128,3 +128,6 @@ ORDER BY field1, [field2...] [ASC [DESC]]
 你可以设定多个字段来排序。
 你可以使用 ASC 或 DESC 关键字来设置查询结果是按升序或降序排列。 默认情况下，它是按升序排列。
 你可以添加 WHERE...LIKE 子句来设置条件。
+
+12、去重
+select distinct 操作语句 from 表名;
