@@ -17,28 +17,24 @@ DROP TABLE table_name;
 mysql> desc shqueue;
  
 4、	显示表
-	显示整个表
-	select * from tablename;
-	显示某几列
-	select <列名> from tablename;
-	显示某几行
-	显示前5行
-	select * from <tablename> limit 5;
-	显示第5到第15行
-	select * from <tablename> limit 5,10;
-	显示字段的属性
-	show full columns from <tablename>;
+显示整个表
+select * from tablename;
+显示某几列
+select <列名> from tablename;
+显示某几行,如显示前5行
+select * from <tablename> limit 5;
+显示第5到第15行
+select * from <tablename> limit 5,10;
+显示字段的属性
+show full columns from <tablename>;
 Mysql中的数据类型介绍：http://www.runoob.com/mysql/mysql-data-types.html
 5、	插入一条记录
 INSERT INTO 表的名字(列名a,列名b,列名c) VALUES(值1,值2,值3);
 6、	删除一条记录
 DELETE FROM <table_name>WHERE condition; ##可选，如果不带where表示删除整个表
-
 mysql> delete from shqueue where JobInqueue = '3';
 Query OK, 1 row affected (0.00 sec)
 
-mysql> select * from shqueue;
-Empty set (0.00 sec)
 
 链接：https://blog.csdn.net/hanxuemin12345/article/details/7818662
 
@@ -78,3 +74,37 @@ Update 语句
 Update 语句用于修改表中的数据。
 语法：
 UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
+
+10、复制整个表的结构和数据，其中primary key不是表的结构需要重新添加
+
+create table <new table> select * from <new table>;
+e.g
+create table jen2 select * from jen;
+
+mysql> desc jen2;
++------------+--------------+------+-----+-------------------+-----------------------------+
+| Field      | Type         | Null | Key | Default           | Extra                       |
++------------+--------------+------+-----+-------------------+-----------------------------+
+| job        | varchar(255) | NO   |     | NULL              |                             |
+| nodeNum    | int(11)      | NO   |     | NULL              |                             |
+| Result     | tinytext     | YES  |     | NULL              |                             |
+| build_time | float        | YES  |     | NULL              |                             |
+| start_time | timestamp    | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+| buildlist  | longtext     | YES  |     | NULL              |                             |
+| slave      | tinytext     | YES  |     | NULL              |                             |
++------------+--------------+------+-----+-------------------+-----------------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc jen;
++------------+--------------+------+-----+-------------------+-----------------------------+
+| Field      | Type         | Null | Key | Default           | Extra                       |
++------------+--------------+------+-----+-------------------+-----------------------------+
+| job        | varchar(255) | NO   | PRI | NULL              |                             |
+| nodeNum    | int(11)      | NO   | PRI | NULL              |                             |
+| Result     | tinytext     | YES  |     | NULL              |                             |
+| build_time | float        | YES  |     | NULL              |                             |
+| start_time | timestamp    | NO   | PRI | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+| buildlist  | longtext     | YES  |     | NULL              |                             |
+| slave      | tinytext     | YES  |     | NULL              |                             |
++------------+--------------+------+-----+-------------------+-----------------------------+
+7 rows in set (0.00 sec)
