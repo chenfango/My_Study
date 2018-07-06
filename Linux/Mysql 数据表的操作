@@ -8,7 +8,7 @@ CREATE TABLE 表的名字
 列名b 数据类型(数据长度)，
 列名c 数据类型(数据长度)
 );
-	Example 
+e.g
 mysql> create table shqueue(Time datetime,JobInqueue int);
 2、	删除表
 DROP TABLE table_name;
@@ -32,15 +32,14 @@ Mysql中的数据类型介绍：http://www.runoob.com/mysql/mysql-data-types.htm
 INSERT INTO 表的名字(列名a,列名b,列名c) VALUES(值1,值2,值3);
 6、	删除一条记录
 DELETE FROM <table_name>WHERE condition; ##可选，如果不带where表示删除整个表
+e.g
 mysql> delete from shqueue where JobInqueue = '3';
 Query OK, 1 row affected (0.00 sec)
 
-
 链接：https://blog.csdn.net/hanxuemin12345/article/details/7818662
 
-删除所有数据，但是保留表
-Truncate：用于删除表内的数据（注：仅删除表内的数据，不删除表本身，相当于Delete语句不写Where子句一样）
-语法：Truncate Table  表名称
+删除所有数据，但是保留表 Truncate：用于删除表内的数据（注：仅删除表内的数据，不删除表本身，相当于Delete语句不写Where子句一样）
+Truncate Table  表名称
 7、	更改表名
 ALTER  TABLE table_name RENAME TO new_table_name
 
