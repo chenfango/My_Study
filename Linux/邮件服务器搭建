@@ -23,10 +23,8 @@ set smtp-auth-password=XXXxx
 set smtp-auth=login
 
 2.Centos
-安装sendmail与mail
-yum -y install sendmail
-service sendmail start
-yum install -y mailx
+安装mail
+yum install -y mail
 安装好后，测试发送邮件：echo "this is my test mail" | mail -s 'mail test' helena.zheng@unisoc.com
 此刻可以发送给公用邮箱，如163等等。
 
