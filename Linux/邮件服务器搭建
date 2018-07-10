@@ -30,3 +30,12 @@ yum install -y mail
 
 查看log：vi  /var/log/maillog
 但是作为企业邮箱可能还是有问题
+
+set smtp-use-starttls
+set ssl-verify=ignore
+set smtp=smtp.unisoc.com:587
+set from=shandmail@unisoc.com
+set smtp-auth-user=shandmail@spreadtrum.com
+set smtp-auth-password=‘’
+set smtp-auth=login
+set nss-config-dir=/etc/pki/nssdb
