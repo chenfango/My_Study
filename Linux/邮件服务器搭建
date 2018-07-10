@@ -27,3 +27,8 @@ set smtp-auth=login
 yum -y install sendmail
 service sendmail start
 yum install -y mailx
+安装好后，测试发送邮件：echo "this is my test mail" | mail -s 'mail test' helena.zheng@unisoc.com
+此刻可以发送给公用邮箱，如163等等。
+
+查看log：vi  /var/log/maillog
+但是作为企业邮箱可能还是有问题
