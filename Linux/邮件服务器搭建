@@ -28,9 +28,10 @@ yum install -y mail
 安装好后，测试发送邮件：echo "this is my test mail" | mail -s 'mail test' helena.zheng@unisoc.com
 此刻可以发送给公用邮箱，如163等等。
 
+输入这个设置密码，默认enter部设置密码
+certutil -N -d /etc/pki/nssdb
 查看log：vi  /var/log/maillog
 但是作为企业邮箱可能还是有问题
-
 set smtp-use-starttls
 set ssl-verify=ignore
 set smtp=smtp.domain:587（端口号）
