@@ -16,7 +16,7 @@ vi /etc/s-nail.rc
 
 set smtp-use-starttls
 set ssl-verify=ignore
-set smtp=smtp.domain:587
+set smtp=smtp.domain:587（端口号）
 set from=mailname
 set smtp-auth-user=mailname
 set smtp-auth-password=XXXxx
@@ -33,9 +33,9 @@ yum install -y mail
 
 set smtp-use-starttls
 set ssl-verify=ignore
-set smtp=smtp.unisoc.com:587
-set from=shandmail@unisoc.com
-set smtp-auth-user=shandmail@spreadtrum.com
-set smtp-auth-password=‘’
+set smtp=smtp.domain:587（端口号）
+set from=mailname
+set smtp-auth-user=mailname
+set smtp-auth-password=XXXxx
 set smtp-auth=login
 set nss-config-dir=/etc/pki/nssdb
