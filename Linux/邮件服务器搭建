@@ -1,7 +1,4 @@
-Ubuntu 
-
-
-方式一:
+1.Ubuntu 
 mail
 直接选择默认安装：
 # apt install mailutils
@@ -24,3 +21,9 @@ set from=mailname
 set smtp-auth-user=mailname
 set smtp-auth-password=XXXxx
 set smtp-auth=login
+
+2.Centos
+安装sendmail与mail
+yum -y install sendmail
+service sendmail start
+yum install -y mailx
