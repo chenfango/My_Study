@@ -1,0 +1,27 @@
+获取某个路径下的所有文件
+
+有两种方式：
+1、
+import os
+os.listdir()
+
+2、import os
+os.walk() ## 该函数可以得到一个三元tupple(dirpath, dirnames, filenames).
+e.g
+
+>>> for dirs in os.walk('/log/Gerrit'):
+...     print (dirs)
+... 
+('/log/Gerrit', [], ['gerrit_2018-06-26.csv', 'gerrit_2018-06-07.csv'])
+>>> for dirs in os.walk('/log/Gerrit'):
+...     print type(dirs)
+... 
+<type 'tuple'>
+>>> for root,dirs,files in os.walk('/log/Gerrit'):
+...     print (root)
+...     print (dirs)
+...     print (files)
+... 
+/log/Gerrit
+[]
+['gerrit_2018-06-26.csv', 'gerrit_2018-06-07.csv']
