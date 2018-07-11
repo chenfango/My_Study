@@ -1,0 +1,6 @@
+mysql Incorrect string value: '\xE9\x95\xBF\xE6\x88\xAA...'
+
+方法：将该字段设置为utf8
+alter table <tablename> change <ziduanming> <ziduanming> varchar(255) character set utf8;
+
+alter table gerrit change subject subject varchar(255) character set utf8;
