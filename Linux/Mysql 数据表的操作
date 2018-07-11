@@ -137,3 +137,8 @@ ORDER BY field1, [field2...] [ASC [DESC]]
 
 12、去重
 select distinct 操作语句 from 表名;
+
+单独添加唯一键
+alter table tableName add unique key(columnName)；
+删除唯一键
+alter table tableName drop index columnName;
