@@ -29,6 +29,17 @@ flush privileges表示刷新权限变更。
 drop user zhangsan@'%';
 
 更改密码
+mysql 5.7 以上
+mysql> update mysql.user set authentication_string=password('xxx') where user='root';
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 1
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+sudo service mysql stop
+sudo service mysql start
 
 举例
 创建用户并授予指定数据库全部权限：适用于Web应用创建MySQL用户
