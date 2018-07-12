@@ -1,5 +1,10 @@
 基本操作语法大全：http://www.runoob.com/mysql/mysql-group-by-statement.html
 
+创建数据库：
+CREATE DATABASE 数据库名;
+为数据库创建用户和账号
+
+
 MySQL表的基本操作
 1、	创建表
 CREATE TABLE 表的名字
