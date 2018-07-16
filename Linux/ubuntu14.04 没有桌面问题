@@ -1,0 +1,36 @@
+
+Ubuntu系统VNC无桌面解决方法
+1、	将之前开启的vnc进程全部释放
+$ vncserver –kill :1  ##数字“1” 是开启的vnc编号
+
+2、	重新配置桌面参数
+$ cp ~/.vnc/xstartup ~/.vnc/xstartup.bak
+$ vi ~/.vnc/xstartup  ##将原来xstartup的内容全部替换为如下
+
+#!/bin/sh
+# Uncomment the following two lines for normal desktop:
+# unset SESSION_MANAGER
+# exec /etc/X11/xinit/xinitrc
+
+#[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+#[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+#xsetroot -solid grey
+#vncconfig -iconic &
+#x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#x-window-manager &
+#gnome-session-fallback &
+export XKL_XMODMAP_DISABLE=1
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+xsetroot -solid grey
+vncconfig -iconic &
+gnome-session &
+
+gnome-panel &
+gnome-settings-gaemon &
+metacity &
+nautilus &
+gnome-terminal &
+
+
+3、重新开启vnc 连接即可
