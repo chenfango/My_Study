@@ -3,3 +3,28 @@ apt-get install iptraf
 # iptraf  -i all -B
 
 此时就有log 在默认的路径：/var/log/iptraf
+
+日志收集脚本：
+#!/bin/bash
+
+Date1=`date +%Y-%m-%d`
+Date2=`date -d '1 day ago' +%Y-%m-%d`
+Date3=`date -d '2 day ago' +%Y-%m-%d`
+Date4=`date -d '3 day ago' +%Y-%m-%d`
+Date5=`date -d '4 day ago' +%Y-%m-%d`
+Date6=`date -d '5 day ago' +%Y-%m-%d`
+Date7=`date -d '6 day ago' +%Y-%m-%d`
+
+mkdir -p /home/LOG/$Date1-all
+rsync -av --progress /var/log/iptraf/ip_traffic-1.log.* /home/LOG/$Date1-all
+rsync -av --progress /var/log/iptraf/ip_traffic-1.log.* /home/LOG/
+
+#for aa in `ls -l --time-style=long-iso /home/LOG/ | awk -F " " '{print $8 }'  | grep "ip_traffic" `
+for aa in ` ls  /home/LOG/  | grep "ip_traffic" `
+do
+echo $aa
+TT=`ls -l --time-style=long-iso /home/LOG/$aa | awk -F " " '{print $6}'`
+gunzip  -c /home/LOG/$aa >> /home/LOG/$TT
+done
+
+rm -rvf /home/LOG/ip_traffic-1.log.*
