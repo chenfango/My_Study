@@ -1,0 +1,73 @@
+##此脚本添加收集的字段：job的类型
+##将先前用单独行，采用list模式更新，减少行数
+
+
+#!/usr/bin/python
+#*encoding=utf-8
+
+#import urllib2
+import requests
+import json
+import csv
+
+## Get build number
+def getcontent(url,content1,content2):
+        page = requests.get(url)
+        inp_dict = json.loads(page.content)
+        listN = []
+        content = inp_dict[content1]
+        for dict in content:
+                listN.append(dict[content2])
+        return listN
+
+def getvaule(listName,n,var1):
+        var2 = ''
+        for a in range(len(listName[n]["parameters"])):
+                if listName[n]['parameters'][a]['name'] == var1:
+                        var2 = listName[n]["parameters"][a]["value"]
+        return var2
+
+##Get detail imformation of each build number
+def getBuildcontent(url):
+        page = requests.get(url)
+        inp_dict = json.loads(page.content)
+        slave = inp_dict["builtOn"]
+        StartTime = inp_dict['id']
+        BuildTime = inp_dict["duration"]
+        url = inp_dict['url']
+        result = inp_dict['result']
+        listName = inp_dict["actions"]
+        for i in range(len(inp_dict['actions'])):
+                if 'parameters' in  inp_dict['actions'][i].keys():
+                        n = i
+        if listName[n]['parameters']:
+                BUILD_LIST = getvaule(listName,n,'BUILD_LIST')
+                archive_job = getvaule(listName,n,'archive_job')
+                ANDROID_VERSION = getvaule(listName,n,'ANDROID_VERSION')
+                CP_VERSION = getvaule(listName,n,'CP_VERSION')
+                sync = getvaule(listName,n,'sync')
+                build = getvaule(listName,n,'build')
+                gmsidh = getvaule(listName,n,'gmsidh')
+                makeidh = getvaule(listName,n,'makeidh')
+                pac = getvaule(listName,n,'pac')
+        return url, archive_job, result, BUILD_LIST, StartTime, BuildTime, slave, ANDROID_VERSION, CP_VERSION, sync, build, gmsidh, makeidh, pac
+
+if __name__ =='__main__':
+
+        Job = ['common_build_1', 'common_build_2', 'common_build_3', 'common_build_4', 'common_build_5', 'common_build_6']
+        #Job = ['common_build_1', 'common_build_2', 'common_build_3', 'common_build_4', 'common_build_5', 'common_build_6', 'common_build_higher', 'common_build_lower']
+        for j in range(len(Job)):
+                url1 = "http://10.0.1.99:8080/jenkins/job/"
+                url2 = "/api/json?pretty=true"
+                url_job=url1+Job[j]+url2
+                listcsv = ['']*15
+                BuildN = (getcontent(url_job,"builds","number")[:])
+                for i in range(len(BuildN)):
+                        url_build = url1+Job[j]+"/"+str(BuildN[i])+url2
+                        listcsv[0] = Job[j]
+                        for k in range(0,13,1):
+                                listcsv[k+1] = getBuildcontent(url_build)[k]
+                        print listcsv
+                        with open("/tmp/data.csv","a+") as csvfile:
+                                writer = csv.writer(csvfile)
+                                writer.writerow(listcsv)
