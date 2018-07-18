@@ -1,0 +1,5 @@
+apt-get install iptraf
+
+# iptraf  -i all -B
+
+此时就有log 在默认的路径：/var/log/iptraf
