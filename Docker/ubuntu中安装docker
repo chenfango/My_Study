@@ -1,0 +1,10 @@
+1、检查前置条件
+
+系统版本：ubuntu 14.04 以上
+$ uname -a
+Linux ubt14043 3.19.0-25-generic #26~14.04.1-Ubuntu SMP Fri Jul 24 21:16:20 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+安装内核
+$ sudo apt-get install linux-headers-3.13.0-43-generic
+$ sudo apt-get install linux-image-3.13.0-43-generic
+$ sudo apt-get install linux-headers-3.13.0-43
