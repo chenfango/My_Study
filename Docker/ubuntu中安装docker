@@ -8,3 +8,6 @@ Linux ubt14043 3.19.0-25-generic #26~14.04.1-Ubuntu SMP Fri Jul 24 21:16:20 UTC 
 $ sudo apt-get install linux-headers-3.13.0-43-generic
 $ sudo apt-get install linux-image-3.13.0-43-generic
 $ sudo apt-get install linux-headers-3.13.0-43
+$ sudo update-grub
+$ ls -l /sys/class/misc/device-mapper
+lrwxrwxrwx 1 root root 0 Jul 23 16:11 /sys/class/misc/device-mapper -> ../../devices/virtual/misc/device-mapper
