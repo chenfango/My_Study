@@ -148,3 +148,7 @@ select distinct 操作语句 from 表名;
 alter table tableName add unique key(columnName)；
 删除唯一键
 alter table tableName drop index columnName;
+
+13、组合
+GROUP BY X, Y意思是将所有具有相同X字段值和Y字段值的记录放到一个分组里
+
