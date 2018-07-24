@@ -1,5 +1,5 @@
 导入
-mysql>LOAD DATA  INFILE '/tmp/queue_sh.csv' 
+mysql>LOAD DATA LOCAL  INFILE '/tmp/queue_sh.csv' 
     ->INTO TABLE shqueue 
     ->FIELDS TERMINATED BY ','
     ->;
