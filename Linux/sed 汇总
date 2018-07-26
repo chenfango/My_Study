@@ -4,3 +4,5 @@ sed -i "1iJobname,NodeNumber,Result,Buildtime,StartTime,project,slave" /tmp/jenk
 
 行首添加
 sed -i 's/^/<添加的内容>&/g' 文件名
+文件增添第一列
+sed -i 's/^/2 /g' text
