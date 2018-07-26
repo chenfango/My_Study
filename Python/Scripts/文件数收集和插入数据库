@@ -1,0 +1,49 @@
+#!/usr/bin/python
+#ecoding=utf-8
+
+import os
+import sys
+import csv
+import MySQLdb
+import time
+
+def getfilenum(filename):
+        try:
+                os.remove(filename)
+        except:
+                print "No need delect"
+        os.system('touch %s' %(filename))
+        Time=time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
+        dd=str(Time)+","
+        os.system('ssh -l root shcompiler.unisoc.com  df -i | grep home >> %s' %(filename))
+        os.system("sed -i 's/ /,/g' %s" %(filename))
+        os.system("sed -i 's/,,/,/g' %s" %(filename))
+        os.system("sed -i 's/,,/,/g' %s" %(filename))
+        os.system("sed -i 's/^/%s/g' %s" %(dd,filename))
+
+def get_conn(List):
+        conn=MySQLdb.connect(
+                host=List[0],
+                port=3306,
+                user=List[1],
+                passwd=List[2],
+                db=List[3])
+        return conn
+
+def OPS_to_mysql(sql,table_name):
+        conn=get_conn(List)
+        cursor=conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        cursor.close()
+        print('data OK')
+
+if __name__ =='__main__':
+        filename="/tmp/cc.csv"
+        getfilenum(filename)
+        List=['10.29.35.14','user','password','jenkins_log']
+        get_conn(List)
+        table_name='compiler_file'
+        sql1 = 'LOAD DATA LOCAL INFILE \''+ filename+'\' INTO TABLE '+table_name+' FIELDS TERMINATED BY \',\''
+        OPS_to_mysql(sql1,table_name)
+                                      
