@@ -3,7 +3,8 @@
 3、设置告警
 
 Step1
-
+grafana.ini
+smtp中进行设置，并且需要设置相关行的“；”，然后重启服务即可
 step2
 点击主页面的“altering”，点击“Nofication channels” 点击“+new channels”
 step3
