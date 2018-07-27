@@ -1,0 +1,46 @@
+log：
+SMTP not configured, check your grafana.ini config file’s [smtp] section
+
+t=2018-07-27T10:45:44+0800 lvl=info msg="Sending alert notification to" logger=alerting.notifier.email addresses=[helena.zheng@unisoc.com]
+t=2018-07-27T10:45:44+0800 lvl=eror msg="Failed to send alert notification email" logger=alerting.notifier.email error="SMTP not configured, check your grafana.ini config file's [smtp] section."
+t=2018-07-27T10:45:44+0800 lvl=eror msg="SMTP not configured, check your grafana.ini config file's [smtp] section." logger=context userId=1 orgId=1 uname=admin error="SMTP not configured, check your grafana.ini config file's [smtp] section."
+t=2018-07-27T10:45:44+0800 lvl=info msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=POST path=/api/alert-notifications/test status=412 remote_addr=10.1.98.146 time_ms=0 size=87 referer=http://10.29.60.14:3000/alerting/notification/2/edit
+
+设置：
+[smtp]
+;enabled = true
+;host = smtp.unisoc.com:587
+;user = shandmail@unisoc.com
+# If the password contains # or ; you have to wrap it with trippel quotes. Ex """#password;"""
+;password = 'password'
+;cert_file =
+;key_file =
+;skip_verify = true
+;from_address = shandmail@unisoc.com
+;from_name = shandmail
+# EHLO identity in SMTP dialog (defaults to instance_name)
+;ehlo_identity = dashboard.example.com
+
+[emails]
+;welcome_email_on_sign_up = false
+
+
+解决方法：将配置文件grafana.ini中smtp 配置中的分号取消，然后重启服务
+
+[smtp]
+enabled = true
+host = smtp.unisoc.com:587
+user = shandmail@unisoc.com
+# If the password contains # or ; you have to wrap it with trippel quotes. Ex """#password;"""
+password = 'password'
+;cert_file =
+;key_file =
+skip_verify = true
+from_address = shandmail@unisoc.com
+;from_name = shandmail
+# EHLO identity in SMTP dialog (defaults to instance_name)
+;ehlo_identity = dashboard.example.com
+
+[emails]
+;welcome_email_on_sign_up = false
+
