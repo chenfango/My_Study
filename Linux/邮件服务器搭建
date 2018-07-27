@@ -32,6 +32,7 @@ yum install -y mail
 certutil -N -d /etc/pki/nssdb
 查看log：vi  /var/log/maillog
 但是作为企业邮箱可能还是有问题
+vi /etc/mail.rc
 set smtp-use-starttls
 set ssl-verify=ignore
 set smtp=smtp.domain:587（端口号）
