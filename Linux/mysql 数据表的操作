@@ -78,7 +78,7 @@ alter table <user> add <COLUMN> VARCHAR(20) DEFAULT NULL;
 //增加一个字段，默认不能为空
 alter table user add <COLUMN> VARCHAR(20) NOT NULL;
 某列后面增加一个字段
-ALTER TABLE table_name ADD [COLUMN] col_name column_definition  [ FIRST | AFTER col_name]
+ALTER TABLE table_name ADD [COLUMN] col_name column_definition  [ FIRST | AFTER col_name] ##FIRST 表示增加此列为第一个列
 //删除一个字段
 alter table user DROP COLUMN new2;
 修改一个字段
