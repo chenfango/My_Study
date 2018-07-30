@@ -96,7 +96,7 @@ UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
 10、复制表
 
 复制整个表的结构和数据，其中primary key不是表的结构需要重新添加
-create table <new table> select * from <new table>;
+create table <new table> like <old table>;
 e.gcreate table jen2 select * from jen;
 
 只复制表结构
