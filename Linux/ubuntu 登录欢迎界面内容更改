@@ -1,3 +1,4 @@
+1、增加需要的内容
 
 vi /etc/ssh/sshd_config
 将Banner /etc/issue.net注释取消
@@ -7,3 +8,30 @@ vi /etc/ssh/sshd_config
 service ssh restart
 
 然后将需要的内容写入到/etc/issue.net即可
+
+2、 去掉原来复杂的内容（链接https://blog.csdn.net/junheart/article/details/46539425）
+Ubuntu欢迎信息保存在/etc/update-motd.d/，修改其中的文件即可修改欢迎信息
+修改相应文件后，执行run-parts /etc/update-motd.d/
+
+原来登录界面有如下内容
+Welcome to Ubuntu 14.04.3 LTS (GNU/Linux 3.19.0-25-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Wed Aug  1 18:42:47 CST 2018
+
+  System load:  7.66               Processes:          534
+  Usage of /:   16.5% of 45.71GB   Users logged in:    14
+  Memory usage: 11%                IP address for em1: 10.0.0.185
+  Swap usage:   0%
+
+  Graph this data and manage this system at:
+    https://landscape.canonical.com/
+
+581 packages can be updated.
+463 updates are security updates.
+
+New release '16.04.4 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+Last login: Thu Jul 26 12:34:41 2018 from shoavdi.unisoc.com
