@@ -18,6 +18,7 @@ Welcome to Ubuntu 14.04.3 LTS (GNU/Linux 3.19.0-25-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com/
 
+###90-updates-available 文件对应
   System information as of Wed Aug  1 18:42:47 CST 2018
 
   System load:  7.66               Processes:          534
@@ -27,7 +28,7 @@ Welcome to Ubuntu 14.04.3 LTS (GNU/Linux 3.19.0-25-generic x86_64)
 
   Graph this data and manage this system at:
     https://landscape.canonical.com/
-
+###
 581 packages can be updated.
 463 updates are security updates.
 
