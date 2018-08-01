@@ -1,0 +1,13 @@
+$ parted /dev/sdx  // 需要进行操作的硬盘是/dev/sdx
+
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+
+(parted) mklabel gpt
+
+(parted) unit TB  //设置单位为TB
+
+(parted) mkpart primary 0 4 //建立4T分区
+
+(parted) print //查看分区信息
+
+(parted) quit
