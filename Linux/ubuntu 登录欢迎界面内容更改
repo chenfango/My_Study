@@ -1,1 +1,9 @@
 
+vi /etc/ssh/sshd_config
+将Banner /etc/issue.net注释取消
+
+重启ssh 服务
+
+service ssh restart
+
+然后将需要的内容写入到/etc/issue.net即可
