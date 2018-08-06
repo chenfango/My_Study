@@ -39,3 +39,5 @@ New release '16.04.4 LTS' available.
 Run 'do-release-upgrade' to upgrade to it.
 
 Last login: Thu Jul 26 12:34:41 2018 from shoavdi.unisoc.com
+
+3、如果需要输出彩色或者加粗，需要在/etc/update-motd.d/10-help-text 文件中添加相应的输出脚本（不能是直接的输出命令，会报错）
