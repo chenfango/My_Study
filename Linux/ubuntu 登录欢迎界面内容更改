@@ -1,5 +1,8 @@
+2、 如果要登录前显示，修改/etc/motd 文件内容即可
+
 1、增加需要的内容
 
+一个是登录后显示
 vi /etc/ssh/sshd_config
 将Banner /etc/issue.net注释取消
 
