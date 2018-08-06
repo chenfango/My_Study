@@ -8,3 +8,7 @@
 # cpan
 cpan[1]> o conf commit
 commit: wrote '/root/.cpan/CPAN/MyConfig.pm'
+
+
+## 其他的镜像元有：
+http://www.cpan.org/SITES.html#Asia
