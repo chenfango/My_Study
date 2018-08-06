@@ -1,0 +1,10 @@
+问题：下载很久无法下载
+分析：cpan 的源的地址访问比较慢
+解决：添加一个镜像源地址
+# vi ~/.cpan/CPAN/MyConfig.pm
+'urllist' => [],   改为如下：
+'urllist' => [q[http://mirrors.hostingromania.ro/cpan.org/], q[http://cpan.lnx.sk/], q[http://mirrors.nxthost.com/CPAN/]],
+：wq!
+# cpan
+cpan[1]> o conf commit
+commit: wrote '/root/.cpan/CPAN/MyConfig.pm'
