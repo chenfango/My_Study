@@ -1,0 +1,22 @@
+ubuntu下安装与卸载软件方法
+1、通过deb包安装的情况： 
+安装.deb包： 
+代码:sudo dpkg -i package_file.deb
+反安装.deb包：
+代码:sudo dpkg -r package_name
+
+如果直接卸载软件包的名字不行，就dpkg -l 找出相应的包名字，再进行删除
+
+2、通过apt-get安装的情况：
+安装
+代码:sudo apt-get install package_name
+反安装
+代码:sudo apt-get remove package_name
+
+3、sudo dpkg -p package_name卸载软件包及其配置文件，但无法解决依赖关系！
+   sudo aptitude purge pkgname卸载软件包及其配置文件与依赖关系包！
+     
+
+清除所有已删除包的残馀配置文件 
+dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P 
+如果报如下错误，证明你的系统中没有残留配置文件了，无须担心。
