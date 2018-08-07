@@ -14,3 +14,6 @@ ln -s python3.4 python
 # python
 Python 3.4.3 (default, Nov 28 2017, 16:41:13) 
 [GCC 4.8.4] on linux
+
+其他操作链接：
+http://devopspy.com/python/install-python-3-6-ubuntu-lts/
