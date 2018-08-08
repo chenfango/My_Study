@@ -1,0 +1,4 @@
+root@shandvm02:~# mount /home6
+mount.nfs: Stale file handle
+root@shandvm02:/# umount -lf /home6
+root@shandvm02:/# mount /home6
