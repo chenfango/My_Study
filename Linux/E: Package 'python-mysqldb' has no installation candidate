@@ -1,0 +1,22 @@
+# apt-get install python-mysqldb
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Package python-mysqldb is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'python-mysqldb' has no installation candidate
+
+# apt-get update
+W: Failed to fetch http://10.29.35.23/ks/UBT14043-x86_64/dists/trusty-security/universe/binary-i386/Packages  404  Not Found
+
+W: Failed to fetch http://10.29.35.23/ks/UBT14043-x86_64/dists/trusty-security/multiverse/binary-i386/Packages  404  Not Found
+
+E: Some index files failed to download. They have been ignored, or old ones used instead.
+
+# cp /etc/apt/sources.list ~/ 
+# wget "http://pastebin.com/raw.php?i=uzhrtg5M" -O /etc/apt/sources.list 
+# apt-get update
+# rm /etc/apt/sources.list.d/ubuntu-extras.list
+# apt-get update
