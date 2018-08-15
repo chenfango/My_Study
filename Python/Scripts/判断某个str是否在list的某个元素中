@@ -1,0 +1,10 @@
+>>> aa= ['2018-08-15 16-32-55', 'zihai.lu', '261G']
+>>> print aa[2]
+261G
+>>> if 'k' in aa[2]:
+...     print "ok"
+... 
+>>> if 'G' in aa[2]:
+...     print "ok"
+... 
+ok
