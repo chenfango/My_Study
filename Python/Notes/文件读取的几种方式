@@ -1,0 +1,45 @@
+Python的文本文件的内容读取中，有三类方法：read()、readline()、readlines()，这三种方法各有利弊，下面逐一介绍其使用方法和利弊。
+内容主要来源于：https://www.jianshu.com/p/d8168034917c
+
+read()
+
+1、内容格式是字符串string，读取完后就失去对了对原有文件的引用
+file = open('/log/compiler/user_2018-08-15.csv')
+>>> print  type(file.read())
+<type 'str'>
+需要转化为list 需要.splitlines()
+>>> print  type(file.read().splitlines())
+<type 'list'>
+2、一次性读，读完后只能输出一次
+
+read()的利端：
+方便、简单
+一次性独读出文件放在一个大字符串中，速度最快
+read()的弊端：
+文件过大的时候，占用内存会过大
+
+readline()
+
+
+readline()逐行读取文本，结果是一个list
+with open(file) as f:
+line = f.readline()
+while line:
+print line
+line = f.readline()
+readline()的利端：
+占用内存小，逐行读取
+readline()的弊端：
+由于是逐行读取，速度比较慢
+
+readlines()：
+**readlines()一次性读取文本的所有内容，结果是一个list
+with open(file) as f:
+for line in f.readlines():
+print line
+这种方法读取的文本内容，每行文本末尾都会带一个'\n'换行符 (可以使用L.rstrip('\n')去掉换行符）
+readlines()的利端：
+一次性读取文本内容，速度比较快
+readlines()的弊端：
+随着文本的增大，占用内存会越来越多
+
