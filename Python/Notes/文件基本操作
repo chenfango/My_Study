@@ -1,0 +1,24 @@
+链接：https://www.cnblogs.com/juandx/p/4962089.html
+
+1、新建文件：
+os.mknod("test.txt")        创建空文件
+fp = open("test.txt",w)     直接打开一个文件，如果文件不存在则创建文件
+2、新建目录
+创建多级目录：os.makedirs（r“c：\python\test”）
+创建单个目录：os.mkdir（“test”）
+3、删除
+函数用来删除一个文件:os.remove()
+删除多个目录：os.removedirs（r“c：\python”）
+4
+
+w     以写方式打开，
+a     以追加模式打开 (从 EOF 开始, 必要时创建新文件)
+r+     以读写模式打开
+w+     以读写模式打开 (参见 w )
+a+     以读写模式打开 (参见 a )
+rb     以二进制读模式打开
+wb     以二进制写模式打开 (参见 w )
+ab     以二进制追加模式打开 (参见 a )
+rb+    以二进制读写模式打开 (参见 r+ )
+wb+    以二进制读写模式打开 (参见 w+ )
+ab+    以二进制读写模式打开 (参见 a+ )
