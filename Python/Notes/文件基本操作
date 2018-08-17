@@ -9,7 +9,9 @@ fp = open("test.txt",w)     直接打开一个文件，如果文件不存在则�
 3、删除
 函数用来删除一个文件:os.remove()
 删除多个目录：os.removedirs（r“c：\python”）
-4
+4、文件写
+fp.write(str)                      #把str写到文件中，write()并不会在str后加上一个换行符
+fp.writelines(seq)            #把seq的内容全部写到文件中(多行一次性写入)。这个函数也只是忠实地写入，不会在每行后面加上任何东西。
 
 w     以写方式打开，
 a     以追加模式打开 (从 EOF 开始, 必要时创建新文件)
