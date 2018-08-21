@@ -1,0 +1,24 @@
+Mysql 操作语句
+
+#!/usr/bin/python
+#*encoding=utf-8
+
+import MySQLdb
+
+
+def get_conn(List):
+        conn=MySQLdb.connect(
+                host=List[0],
+                port=3306,
+                user=List[1],
+                passwd=List[2],
+                db=List[3])
+        return conn
+
+def OPS_to_mysql(sql,table_name):
+        conn=get_conn(List)
+        cursor=conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        cursor.close()
+        print('Delete data OK')
