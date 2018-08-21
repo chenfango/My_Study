@@ -1,9 +1,0 @@
-rsync -av --progress --protocol=30 haoming.lu@10.29.1.82:/home/haoming.lu/yunos.tar.gz ./
-haoming.lu@10.29.1.82's password: 
-protocol version mismatch -- is your shell clean?
-(see the rsync man page for an explanation)
-rsync error: protocol incompatibility (code 2) at compat.c(174) [Receiver=3.1.0]
-
-https://my.oschina.net/leejun2005/blog/342865
-
-方法：将需要远程的服务器上的.bashrc文件重命名为其他文件
