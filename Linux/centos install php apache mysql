@@ -1,0 +1,29 @@
+1、	安装mysql软件
+目的：用于访问数据库
+yum install mysql
+2、	安装apache
+2.1 安装
+# yum install httpd
+# netstat -nlp | grep httpd
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      23901/httpd
+启动服务
+ # /bin/systemctl start  httpd.service 
+关闭服务
+# /bin/systemctl stop httpd.service
+查看版本
+# httpd -v
+Server version: Apache/2.4.6 (CentOS)
+此时在页面上输入服务器IP会出现如下页面
+ 
+
+3、	安装php
+# yum install php
+# yum install php-mysql
+# /bin/systemctl restart  httpd.service
+# vi /var/www/html/phpinfo.php
+<?php
+  phpinfo();
+?>
+此时在页面中可以访问如下：
+ 
+
