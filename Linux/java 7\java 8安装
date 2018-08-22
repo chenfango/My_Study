@@ -1,0 +1,7 @@
+解压到Ubuntu服务器的/usr/lib/下（java 6、7、8都有），然后在/etc/profile定义下路径就行了
+
+#export JAVA_HOME=/usr/java/jdk1.6.0_29
+#export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+export CLASSPATH=$CLASSPATH:.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
