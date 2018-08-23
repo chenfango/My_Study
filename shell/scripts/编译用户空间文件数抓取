@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+Home="home1 home4 home6 home8 home9 home10 home11 home12"
+dd=`date +%Y-%m-%d_%H`
+rm -rvf /usr/local/bin/user_$dd
+for h in `echo $Home`
+do
+        for u in `ls /$h`
+        do
+        echo `date '+%Y-%m-%d %H-%M-%S'`","$u","$h","`su - $u -c 'quota -s'  |awk -F " " '{print $1}' | grep -vE "Disk|Filesystem|home"`","`su - $u -c 'quota -s' | awk -F " " '{print $4}' | grep -Ev "user|limit"` >> /usr/local/bin/user_$dd
+        done
+done
+
+
+rsync -av --progress /usr/local/bin/user_$dd root@10.29.35.14:/log/compiler/
