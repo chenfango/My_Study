@@ -1,0 +1,79 @@
+#!/usr/bin/python
+
+import os
+import sys
+import time
+import csv
+import time
+import MySQLdb
+import codecs
+
+def getfile(Log,Data):
+        os.system("sed -i 's/, /,/g' %s" %(Log))
+        os.system("sed -i 's/*//g' %s" %(Log))
+        os.system("sed -i 's/Set //g' %s" %(Log))
+        os.system("sed -i 's/Agent //g' %s" %(Log))
+        os.system("sed -i '/qishuai.wang/d' %s" %(Log))
+        file = open(Log,"rw+")
+        data = open(Data,"a+")
+        for line in file:
+                space = line.split(',',4)[3]
+                filen = line.split(',',4)[4]
+                if " " in space:
+                #       pass
+                        if "k" in filen:
+                                filenew = filen.replace('k','000')
+                                string = line.replace(filen,filenew)
+                                data.write(string)
+                elif "G" in space:
+                        str1 = line.replace('G','')
+                        if "k" in filen:
+                                filenew = filen.replace('k','000')
+                                string = str1.replace(filen,filenew)
+                                data.write(string)
+
+                elif "M" in space:
+                        str1 = line.replace(space,str(float(space[-len(space):-2])/1000))
+                        if "k" in filen:
+                                filenew = filen.replace('k','000')
+                                string = str1.replace(filen,filenew)
+                                data.write(string）
+                else:
+                        str1 = line.replace(space,'0')
+                        if "k" in filen:
+                                filenew = filen.replace('k','000')
+                                string = str1.replace(filen,filenew)
+                                data.write(string)
+        file.close()
+        data.close()
+        os.system("sed -i '/020001080-00080-02030/d' %s" %(Data))
+
+def get_conn(List):
+        conn=MySQLdb.connect(
+                host=List[0],
+                port=3306,
+                user=List[1],
+                passwd=List[2],
+                db=List[3])
+        return conn
+
+def OPS_to_mysql(sql,table_name):
+        conn=get_conn(List)
+        cursor=conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        cursor.close()
+        print('Data OK')
+
+
+if __name__ == '__main__':
+        TT= time.strftime("%Y-%m-%d_%H", time.localtime())
+        Log="/log/compiler/user_"+TT
+        Data="/log/compiler/user_"+TT+".csv"
+        getfile(Log,Data)
+        List=['10.0.0.232','user','password','jenkins_log']
+        get_conn(List)
+        table_name='comuser'
+        sql = 'LOAD DATA LOCAL INFILE \''+ Data+'\' INTO TABLE '+table_name+' FIELDS TERMINATED BY \',\''
+        OPS_to_mysql(sql,table_name)
+                            
