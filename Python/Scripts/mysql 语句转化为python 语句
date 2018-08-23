@@ -21,4 +21,12 @@ def OPS_to_mysql(sql,table_name):
         cursor.execute(sql)
         conn.commit()
         cursor.close()
-        print('Delete data OK')
+        print('Data OK')
+        
+ if __name__ == '__main__':
+        List=['10.0.0.232','user','password','jenkins_log']
+        get_conn(List)
+        table_name='comuser'
+        ##如下为mysql 的语句
+        sql = 'LOAD DATA LOCAL INFILE \''+ Data+'\' INTO TABLE '+table_name+' FIELDS TERMINATED BY \',\''
+        OPS_to_mysql(sql,table_name)
