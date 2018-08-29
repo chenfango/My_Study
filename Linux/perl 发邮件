@@ -1,0 +1,18 @@
+##Taipei
+
+$message = `cat /tmp/tpe-space ` ;
+if  ($message) {
+
+ #print $message
+#$to = 'helena.zheng@spreadtrum.com';
+$to = 'helena.zheng@spreadtrum.com,itservicedesk@spreadtrum.com';
+$from = 'tpeandmail@spreadtrum.com';
+$subject = 'R&D-&Android&Taipei space';
+open(MAIL, "|/usr/sbin/sendmail -t");
+print MAIL "To: $to\n";
+print MAIL "From: $from\n";
+print MAIL "Subject: $subject\n\n";
+print MAIL $message;
+close(MAIL);
+#print "Taipei email has been send out\n";
+}
