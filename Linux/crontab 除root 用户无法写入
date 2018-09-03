@@ -1,0 +1,23 @@
+builder@shhud06:~$ crontab -e
+crontab: installing new crontab
+crontab: crontabs/builder: rename: Operation not permitted
+crontab: edits left in /tmp/crontab.efJBfa/crontab
+
+
+Step 1：核实权限注意是：g+s 不是 u+s
+
+# ls -l /usr/bin/crontab
+-rwxr-sr-x 1 root crontab 35984 Feb  9  2013 /usr/bin/crontab
+
+step 2
+# ls -l /var/spool/cron/crontabs/
+total 4
+-rw-r--r-- 1 root root      0 Aug  3  2017 builder
+-rw------- 1 root crontab 613 Jun 22 15:34 root
+
+调整如下：
+ ls -l /var/spool/cron/crontabs/
+total 4
+-rw------- 1 builder crontab   0 Aug  3  2017 builder
+-rw------- 1 root    crontab 613 Jun 22 15:34 root
+
