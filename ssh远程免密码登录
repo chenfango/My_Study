@@ -15,3 +15,20 @@
 可以使用：
 
 ssh-cop-id命令会将指定的公钥文件复制到远程计算机
+
+
+如果需要多台服务器之间互相访问
+step1：
+在No1台服务器上生成ssh key
+
+step2：
+将No1 的ssh key中的id_rsa.pub 拷贝到No  服务器上，重命名为authorized_keys，权限755
+-rwxr-xr-x 1 root root 1983 Sep  4 15:19 authorized_keys
+
+step3：
+将No2台服务器上的authorized_keys拷贝到No1服务器上。
+
+step4：
+将No1服务器中的.ssh文件（包括authorized_keys）一起拷贝到需要互相root 免密码访问的机器中。
+
+即可执行免密码登录
