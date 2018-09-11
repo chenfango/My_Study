@@ -1,0 +1,22 @@
+#!/bin/bash
+d0=`date +%Y%m%d`
+d1=$(date +%s -d 20160101)
+d2=$(date +%s -d $d0)
+
+ddiff='31'
+
+for ss in `cat /home/root/lizhi/lizhidengji`
+do
+        Userhome=`echo $ss | awk -F ":" '{print $2}'`
+        LD=`echo $ss | awk -F ":" '{print $5}'`
+        echo $((((d2-d1)/86400)-$LD))
+        if [ $((((d2-d1)/86400)-$LD)) -ge $ddiff ]
+        then
+                chown root:root $Userhome
+                chmod 0700 $Userhome
+                echo $ss >> /home/root/lizhi/nopermission
+                sed -i "s#$ss##g" /home/root/lizhi/lizhidengji
+                sed -i '/^$/d' /home/root/lizhi/lizhidengji
+        fi
+
+done
