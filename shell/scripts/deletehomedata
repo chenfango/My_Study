@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Date=`date +%Y%m%d`
+Date2=`date +%Y%m%d -d "10 day ago"`
+
+
+/bin/mkdir -p /log/Allhome/home10/$Date
+/bin/rm -rf /log/Allhome/home10/$Date2
+
+cd /home10
+for Job in `ls`
+do
+if [ -d $Job ];then
+if [ $(( (`date +%s` - `stat -L --format %Y $Job`) < (2*365*24*60*60) )) = 1 ] && [ $(( (`date +%s` - `stat -L --format %Y $Job`) > (1*365*24*60*60) )) = 1 ] ;then
+echo $Job  >> /log/Allhome/home10/$Date/home.txt
+fi
+fi
+done
+
+for Jobb in `cat /log/Allhome/home10/$Date/home.txt`
+do
+echo $Jobb  >> /log/Allhome/home10/$Date/home_2.txt
+ls -l /home10/ | grep $Jobb |  awk -F[:" "]+ '{print $8}' >> /log/Allhome/home10/$Date/home_2.txt
+ssh -l root 10.0.1.241 "quota report" | grep $Jobb >> /log/Allhome/home10/$Date/home_2.txt
+done
+
+scp -r /log/Allhome/home10/$Date/home_2.txt root@10.0.0.173:/log/Allhome/home10
