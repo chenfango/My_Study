@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Date=`date +%Y%m%d`
+Date2=`date +%Y%m%d -d "7 days ago"`
+
+#rm -rf /log/githome/$Date.log
+rm -rf /tools/shell/zlinux1/Git/githome/$Date.log
+#touch /log/githome/$Date.log
+touch /tools/shell/zlinux1/Git/githome/$Date.log
+
+Server='njgit01 gitmaster shgit01 gitsrv02 gitsrv03 gitbackup ssgit01 intelgit01 bjgit02 tjgit01 cdandroid02 szgit01 xmgit01 tpegit01 delgit01'
+Server01="bjgit01"
+
+for Server in $Server
+do
+IP=`ssh $Server "/sbin/ifconfig | grep "addr:10."" | awk -F':' '{print $2}' | tr -d ' Bcast'`
+Home=`ssh $Server "df -h /home" | grep /home`
+echo $Server'('$IP')' "  " $Home >> /log/githome/$Date.log
+done
+IP1=`ssh $Server01 "/sbin/ifconfig | grep "addr:10."" | awk -F':' '{print $2}' | tr -d ' Bcast'`
+Home1=`ssh $Server01 "df -h | grep /dev/cciss/c0d0p1" `
+echo $Server01'('$IP1')'  "  " $Home1 >> /tools/shell/zlinux1/Git/githome/$Date.log
+
+cp  /tools/shell/zlinux1/Git/githome/$Date.log  /tools/shell/shbak01/GITHOME/
+#scp -r /log/githome/$Date.log  root@10.29.3.39:/log/GITHOME/
+#rm -rf /log/githome/$Date2.log
+rm -rf /tools/shell/zlinux1/Git/githome/$Date2.log
