@@ -1,0 +1,35 @@
+#!/bin/bash
+
+path1="tools/shell/shbak01/Jenkins"
+
+rm -rvf /$path1/jenkinsjobs.txt
+rm -rvf /$path1/jenkinsplugins.txt
+
+rm -rvf /$path1/jenkinsplugins2.txt
+rm -rvf /$path1/jenkinsjobs2.txt
+
+
+ansible jenkins -m shell -a 'ls /space/hudson/jobs' >> /$path1/jenkinsjobs.txt
+ansible jenkins -m shell -a 'ls /space/hudson/plugins' >> /$path1/jenkinsplugins.txt
+sed -i '/SUCCESS/d' /$path1/jenkinsjobs.txt
+sed -i '/FAILED/d' /$path1/jenkinsjobs.txt
+sed -i '/cannot access/d' /$path1/jenkinsjobs.txt
+
+sed -i '/SUCCESS/d' /$path1/jenkinsplugins.txt
+sed -i '/FAILED/d' /$path1/jenkinsplugins.txt
+sed -i '/cannot access/d' /$path1/jenkinsplugins.txt
+
+sort /$path1/jenkinsplugins.txt | uniq > /$path1/jenkinsplugins2.txt
+sort /$path1/jenkinsjobs.txt | uniq > /$path1/jenkinsjobs2.txt
+sed -i '/10'/d /$path1/jenkinsplugins2.txt
+
+Jobsnumber0=`cat /$path1/jenkinsjobs.txt | wc -l`
+Pluginsnumber0=`cat /$path1/jenkinsplugins2.txt | wc -l`
+Jobonly0=`cat /$path1/jenkinsjobs2.txt | wc -l`
+
+
+Jobsnumber=$(($Jobsnumber0-35))
+Jobonly0=$(($Jobsnumber0-$Jobonly0))
+Pluginsnumber=$(($Pluginsnumber0/2))
+Date=`date`
+echo  "Jobsnumber=" $Jobsnumber  "相同Job名字的Job数量=" $Jobonly0 " "  "Pluginsnumber=" $Pluginsnumber | mail -a /$path1/jenkinsplugins2.txt -a /$path1/jenkinsjobs.txt -s "Number of Jenkins Jobs and Plugins" xxx@xxx.com
