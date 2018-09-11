@@ -1,0 +1,61 @@
+#!/bin/bash
+
+Date=`date +%m`
+todiff=`date +%j`
+
+for uu in $(cat /home5/helena.zheng/python/lizhi/test1.txt)
+do
+        userhome=$(echo $uu |awk -F ":" '{print $1}')
+        resigndate=$(echo $uu |awk -F ":" '{print $3}')
+        resigndiff=$(echo $uu |awk -F ":" '{print $4}')
+        resignyy=$(echo $bb |awk -F "-" '{print $1}')
+        resignmm=$(echo $bb |awk -F "-" '{print $2}')
+        mm='2'
+        mm2='1'
+        ddiff='61'
+
+        sitename=`echo $uu | awk -F ':' '{print $2}'`
+        #echo $sitename
+
+if [  $sitename -ne 'shanghai' ]
+then
+        echo $uu >>/home5/helena.zheng/python/lizhi/site_android_deletename.txt
+fi
+
+#/usr/bin/mail -s "Site Androidaccout need to be deleted" helena.zheng@spreadtrum.com</home5/helena.zheng/python/lizhi/touch site_android_deletename.txt
+
+
+if [ $Date -eq $mm ] || [ $Date -eq $mm2 ]
+then
+        DD=$((todiff+365-resigndiff))
+        if [ $DD -ge $ddiff ]
+        then
+                username=$(echo $userhome | awk -F "/" '{print $3}')
+                userdel $username
+                sed 's/(,$username,)//g' /etc/netgroup
+                echo $uu>>/home5/helena.zheng/python/lizhi/delete.txt
+                rm -rvf $userhome
+                echo "zlinux2.spreadtrum.com" | /usr/lib64/yp/ypinit -m
+                service ypserv restart
+                sed -i 's#'$uu'#EXCLUSIVE#;/EXCLUSIVE/d' /home5/helena.zheng/python/lizhi/test1.txt
+                        fi
+else
+        DD=$((todiff+0-resigndiff))
+        if [ $DD -ge $ddiff ]
+        then
+                username=$(echo $userhome | awk -F "/" '{print $3}')
+                userdel $username
+                sed 's/(,$username,)//g' /etc/netgroup
+                echo $uu>>/home5/helena.zheng/python/lizhi/delete.txt
+                rm -rvf $userhome
+                echo "zlinux2.spreadtrum.com" | /usr/lib64/yp/ypinit -m
+                service ypserv restart
+                sed -i 's#'$uu'#EXCLUSIVE#;/EXCLUSIVE/d' /home5/helena.zheng/python/lizhi/test1.txt
+        fi
+fi
+
+
+done
+
+ssh -l root 10.0.0.237 /usr/lib64/yp/ypinit -s zlinux1
+ssh -l root 10.0.0.237 service ypserv restart
