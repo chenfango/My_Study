@@ -1,0 +1,36 @@
+#!/bin/bash
+
+
+d0=`date +%Y-%m-%d`
+d2=$(date +%s -d $d0)
+rm -rvf  /log/RMNote-$d0.log
+touch /log/RMNote-$d0.log
+ddiff='30'
+
+Job=`ls /JenkinsData/jobs`
+#Job="TEMP_BUILD"
+
+for job in $Job
+do
+#       JJOB=$job"_IDH"
+        node=`ls /JenkinsData/jobs/$job/builds | grep "_"`
+        for bb in $node
+        do
+                b1=`echo $bb | awk  -F "_" '{print $1}'`
+                d1=$(date +%s -d $b1)
+                echo $job $bb  $(((d2-d1)/86400)) 
+
+                if [ $((((d2-d1)/86400))) -ge $ddiff ] ;then
+                ## new path
+                find  /JenkinsData/jobs/$job/builds/$bb/archive/ -name "*.gz" >>  /log/RMNote-$d0.log
+                find  /JenkinsData/jobs/$job/builds/$bb/archive/ -name "*.tgz" >> /log/RMNote-$d0.log
+                find  /JenkinsData/jobs/$job/builds/$bb/archive/ -name "*.zip" >> /log/RMNote-$d0.log
+                fi
+done
+done
+
+for aa in $(cat /log/RMNote-$d0.log)
+do
+rm -rvf $aa
+done
+~            
