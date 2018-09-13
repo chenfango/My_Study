@@ -1,9 +1,0 @@
-def getruningnode(username,password,jenkins_server_url):
-        server = jenkins.Jenkins(jenkins_server_url, username, password)
-        node = server.get_nodes()
-        node_vaule=[]
-        node.remove({'offline': False, 'name': u'master'})
-        #print node
-        for i in range(len(node)-1):
-                node_vaule.append(server.get_node_info(node[i]['name'])['idle'])
-        return node_vaule.count(True)
