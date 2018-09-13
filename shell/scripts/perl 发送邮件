@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+
+##nanjing
+
+$message = `cat /tmp/nj-space ` ;
+if  ($message) {
+
+ #print $message
+#$to = 'helena.zheng@spreadtrum.com';
+$to = 'helena.zheng@spreadtrum.com,itservicedesk@spreadtrum.com';
+$from = 'njandmail@spreadtrum.com';
+$subject = 'R&D-&Android&Nanjing space';
+open(MAIL, "|/usr/sbin/sendmail -t");
+print MAIL "To: $to\n";
+print MAIL "From: $from\n";
+print MAIL "Subject: $subject\n\n";
+print MAIL $message;
+close(MAIL);
+#print "nanjing email has been send out\n";
+}
