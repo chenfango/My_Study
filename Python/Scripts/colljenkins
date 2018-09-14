@@ -1,0 +1,106 @@
+#!/usr/bin/python
+#*encoding=utf-8
+
+import requests
+import json
+import csv
+import time
+import os
+import sys
+import MySQLdb
+import codecs
+
+## Get build number
+def getcontent(url,content1,content2):
+        page = requests.get(url)
+        inp_dict = json.loads(page.content)
+        listN = []
+        content = inp_dict[content1]
+        for dict in content:
+                listN.append(dict[content2])
+        return listN
+
+
+##Get detail imformation of each build number
+def getBuildcontent(url):
+        page = requests.get(url)
+        inp_dict = json.loads(page.content)
+        url = inp_dict['url']
+        slave = inp_dict["builtOn"]
+        StartTime = inp_dict['id']
+        BuildTime = inp_dict["duration"]/(1000*60)
+        #BuildTime = inp_dict["duration"] 
+        List = inp_dict['actions']
+        result = inp_dict["result"]
+        BUILD_LIST = archive_job = ANDROID_VERSION = CP_VERSION = sync = build = gmsidh = makeidh = pac = FM_BASE = ""
+        for n in range(len(List)):
+                if "parameters" in List[n].keys():
+                        for k in range(len(List[n]["parameters"])):
+                                if List[n]["parameters"][k]['name'] == 'BUILD_LIST':
+                                        BUILD_LIST = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'archive_job':
+                                        archive_job = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'ANDROID_VERSION':
+                                        ANDROID_VERSION = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'CP_VERSION':
+                                        CP_VERSION = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'sync':
+                                        sync = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'build':
+                                        build = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'gmsidh':
+                                        gmsidh = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'makeidh':
+                                        makeidh = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'pac':
+                                        pac = List[n]["parameters"][k]['value']
+                                if List[n]["parameters"][k]['name'] == 'FM_BASE':
+                                        FM_BASE = List[n]["parameters"][k]['value']
+                else :
+                        pass
+        return url,result,StartTime,BuildTime,slave,sync,build,gmsidh,makeidh,pac,archive_job,ANDROID_VERSION,CP_VERSION,FM_BASE,BUILD_LIST
+def get_conn(List):
+        conn=MySQLdb.connect(
+                host=List[0],
+                port=3306,
+                user=List[1],
+                passwd=List[2],
+                db=List[3])
+        return conn
+def OPS_to_mysql(sql,table_name):
+        conn=get_conn(List)
+        cursor=conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        cursor.close()
+        print('data OK')
+
+if __name__ =='__main__':
+
+        TT = time.strftime("%Y-%m-%d", time.localtime())
+        url_0 = "http://10.0.1.99:8080/jenkins/"
+        url_1 = "api/json?pretty=true"
+        url = url_0+url_1
+        Job = getcontent(url,'jobs','name')
+        filename = "/log/Jenkins/all/jenkins_"+TT+".csv"
+        for j in range(len(Job)):
+                url_job = url_0+"job/"+Job[j]+"/"+url_1
+                BuildN = getcontent(url_job,"builds","number")
+                for i in range(len(BuildN)):
+                        url_build = url_0+"job/"+Job[j]+"/"+str(BuildN[i])+"/"+url_1
+                        listcsv = ['']*(len(getBuildcontent(url_build))+1)
+                        listcsv[0] = Job[j]
+                        for k in range(0,len(getBuildcontent(url_build)),1):
+                                listcsv[k+1] = getBuildcontent(url_build)[k]
+                        print listcsv
+                        with open(filename,"a+") as csvfile:
+                                writer = csv.writer(csvfile)
+                                writer.writerow(listcsv)
+       
+        List=['IP','USER','PASSWORD','DATABASES']
+        get_conn(List)
+        table_name='jenkins'
+        sql1 = 'LOAD DATA LOCAL INFILE \''+ filename+'\' INTO TABLE '+table_name+' FIELDS TERMINATED BY \',\''
+        OPS_to_mysql(sql1,table_name)
+        sql='delete from ' +table_name+' where StartTime < "2018-07-22 23:59:59"'
+        OPS_to_mysql(sql,table_name)
