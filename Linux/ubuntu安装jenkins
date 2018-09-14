@@ -1,0 +1,119 @@
+Ubuntu 搭建hudson系统步骤
+1、	挂载P盘
+
+# mount –o username=ubuntu, password=12cdCD //10.0.0.166/Public_ Folder /mnt
+
+2、	安装tomcat软件
+
+# dpkg –i /mnt/OPS/IT/Softwares/Ubuntu/1404Android/hudson/tomcat7/*
+
+或：# apt-get install tomcat7
+
+3、	修改属主和属组
+
+# vi /etc/passwd
++builder
++pac
+:wq
+
+# mkdir /space/hudson
+# mkdir /space/builder
+# mkdir /space/builder/repo
+# mkdir /space/builder/build
+# chown –R builder:gitgroup /space/hudson
+# chown –R builder:gitgroup /space/builder
+
+
+# vi /etc/default/tomcat7
+TOMCAT7_USER=builder    （默认为tomcat7）
+TOMCAT7_GROUP=gitgroup （默认为tomcat7）
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 （调java版本）
+JAVA_OPTS="-Djava.awt.headless=true –DHUDSON_HOME=/space/hudson –Duser.timezone=Asia/Shanghai -Xmx1028m -XX:+UseConcMarkSweepGC”
+:wq 
+
+将/etc/及/var下所有文件的属主/属组tomcat7改为builder/gitgroup
+# cd /etc
+# find . -user tomcat7 -exec chown builder {} \;
+# find . -group tomcat7 -exec chgrp gitgroup {} \;
+# cd /var
+# find . -user tomcat7 -exec chown builder {} \;
+# find . -group tomcat7 -exec chgrp gitgroup {} \;
+
+4、	添加jenkins环境变量
+
+# vi /etc/init.d/tomcat7
+添加以下内容
+export USE_CCACHE=1 
+export USER=builder
+export HOME=/home/builder
+TOMCAT7_USER=builder
+TOMCAT7_GROUP=gitgroup
+
+5、	拷贝jenkins.war到/var/lib/tomcat7/webapps/下
+
+# rsync –av --progress /mnt/OPS/IT/Softwares/Ubuntu/1404Android/hudson/jenkins.war /var/lib/tomcat7/webapps/
+注：--progress显示备份过程
+
+6、	安装webalizer
+
+# dpkg –i /mnt/OPS/IT/Softwares/Ubuntu/1404Android/hudson/webalizer/webalizer_2.23.08-1_amd64.deb
+或 # apt-get install webalizer
+
+7、	修改tomcat log格式
+
+# vi /var/lib/tomcat7/conf/server.xml
+         <prefix="localhost_access_log" suffix=".txt" rotatable="false"
+                  pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+:wq
+
+8、	启动/停止/重启 tomcat7
+
+# service tomcat7 start/stop/restart
+
+或
+# netstat –nplt | grep 8080
+# kill -9 进程号
+# service tomcat7 start
+
+9、	调整webalizer配置
+
+# mv /var/www/webalizer /var/lib/tomcat7/webapps/usage
+# vi /etc/webalizer/webalizer.conf 
+
+LogFile /var/log/tomcat7/localhost_access_log.txt 
+OutputDir /var/lib/tomcat7/webapps/usage
+:wq
+
+10、启动webalizer
+
+# webalizer
+
+11、	搭建好后，登录Jenkins页面，进行配置
+
+外网：
+
+点击“系统管理”——“Configure Global Security”
+进入页面后设置LDAP，具体参数设置如下：
+服务器：spreadtrum.com:3268
+root DN：DC=spreadtrum,DC=com
+用户搜索过滤器：sAMAccountName={0}
+Manager DN：CN=scmldap,OU=ServiceAccount,DC=spreadtrum,DC=com
+管理密码：xxxxxx
+登录用户可以做任何事：该项先不选。可在设置后完毕后登录时勾选上
+
+12	# su – builder
+# cache –M 100G 
+
+内网：
+
+
+hudson-系统管理-Configure Security-勾选Enable security
+LDAP 
+服务器：172.16.1.41:3268 
+root DN:DC=sprd,DC=com
+User search filter：sAMAccountName={0}    （jenkins为用户搜索过滤器：sAMAccountName={0}）
+Manager DN:CN=scmldap,OU=ServiceAccount,DC=sprd,DC=com
+Manager Password：xxxxx
+
+登录用户可以做任何事
+ 
