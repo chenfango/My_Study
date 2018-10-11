@@ -1,0 +1,27 @@
+https://blog.csdn.net/piaoyidage/article/details/42098911
+
+StringIO的行为与file对象非常像，但它不是磁盘上文件，而是一个内存里的“文件”，我们可以将操作磁盘文件那样来操作StringIO。
+cStringIO
+Python标准模块中还提供了一个cStringIO模块，它的行为与StringIO基本一致，但运行效率方面比StringIO更好。
+
+import cStringIO
+
+注意：
+1. cStringIO.StringIO不能作为基类被继承；
+
+2. 创建cStringIO.StringIO对象时，如果初始化函数提供了初始化数据，新生成的对象是只读的。
+
+
+>>> import cStringIO
+>>> output = cStringIO.StringIO()
+>>> output.write('First line.\n')
+>>> print >>output,'Second line.'
+>>> contents = output.getvalue()
+>>> print contents
+First line.
+Second line.
+
+>>> output.close()
+>>> print contents
+First line.
+Second line.
