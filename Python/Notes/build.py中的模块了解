@@ -1,0 +1,17 @@
+1、shutil
+是一种高层次的文件操作工具。类似于高级API，而且主要强大之处在于其对文件的复制与删除操作更是比较支持好。
+https://www.cnblogs.com/xiaowuyi/archive/2012/03/08/2385808.html
+https://docs.python.org/2/library/shutil.html
+
+2、fnmatch
+文件名字的匹配
+https://blog.csdn.net/u011653701/article/details/46276399
+
+3、argparse
+自定义函数参数的设置
+http://wiki.jikexueyuan.com/project/explore-python/Standard-Modules/argparse.html
+
+4、ConfigParser
+ConfigParser模块在python中是用来读取配置文件，配置文件的格式跟windows下的ini配置文件相似，可以包含一个或多个节（section），每个节可以有多个参数（键=值）。使用的配置文件的好处就是不用再程序中硬编码，可以是你的程序变得灵活起来。 
+注意：在python 3 中ConfigParser模块名已更名为configparser
+https://blog.csdn.net/henulwj/article/details/49174355
