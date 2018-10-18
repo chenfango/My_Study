@@ -1,1 +1,27 @@
 
+查看docker 版本
+$ docker version
+
+查看docker详情
+# docker info:查看系统(docker)层面信息，包括管理的images, containers数等
+
+搜索容器
+# docker search <镜像名>
+
+查看容器
+# docker ps <option>  
+-h 帮助
+
+拉取容器
+Usage:	docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+Pull an image or a repository from a registry
+Options:
+  -a, --all-tags                Download all tagged images in the repository
+      --disable-content-trust   Skip image verification (default true)
+      --help                    Print usage
+      
+运行容器
+# docker run --help
+Usage:	docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+Run a command in a new container
+
