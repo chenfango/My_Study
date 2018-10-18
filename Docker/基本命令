@@ -31,7 +31,11 @@ Run a command in a new container
 保存, 恢复镜像信息
 docker save/load
 
+利用Dockerfile创建image
 
+写好dockerfile文件；
+运行 docker build -t <imageID:TagID> <Dockerfile文件所在路径>
+运行好以后可以用docker image查看是否存在
 
 操作容器状态
 docker start/stop/pause/unpause/kill/restart CONTAINER_ID
