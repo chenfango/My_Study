@@ -38,3 +38,7 @@ docker start/stop/pause/unpause/kill/restart CONTAINER_ID
 
 
 https://www.w3cschool.cn/use_docker/use_docker-cjka27zg.html
+
+
+容器的创建三种模式
+https://blog.csdn.net/zziahgf/article/details/72578147
