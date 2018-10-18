@@ -8,11 +8,14 @@ $ docker version
 搜索容器
 # docker search <镜像名>
 
-查看容器
+查看容器列表
 # docker ps <option>  
 -h 帮助
 
-拉取容器
+查看镜像列表
+docker iamges
+
+拉取镜像
 Usage:	docker pull [OPTIONS] NAME[:TAG|@DIGEST]
 Pull an image or a repository from a registry
 Options:
@@ -20,8 +23,18 @@ Options:
       --disable-content-trust   Skip image verification (default true)
       --help                    Print usage
       
-运行容器
+使用镜像并创建容器
 # docker run --help
 Usage:	docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 Run a command in a new container
 
+保存, 恢复镜像信息
+docker save/load
+
+
+
+操作容器状态
+docker start/stop/pause/unpause/kill/restart CONTAINER_ID
+
+
+https://www.w3cschool.cn/use_docker/use_docker-cjka27zg.html
