@@ -68,9 +68,9 @@ https://www.w3cschool.cn/use_docker/use_docker-cjka27zg.html
 
 容器的创建三种模式
 https://blog.csdn.net/zziahgf/article/details/72578147
-1、利用制定DockerFile文件
+1、利用制定DockerFile文件，https://yeasy.gitbooks.io/docker_practice/image/build.html
 2、利用已有的image，进入后修改相关配置内容，形成新的image。命令：docker commit ,相关的网址：https://yeasy.gitbooks.io/docker_practice/image/commit.html
-
+但是方法2的不利之处：会黑盒增加很多的其他文件，导致镜像的臃肿
 
 
 容器Dockerfile解析
