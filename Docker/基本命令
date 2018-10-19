@@ -35,6 +35,10 @@ Usage:	docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 Run a command in a new container
 -P （大写） :是容器内部端口随机映射到主机的高端口
 -p (小写)   ：是容器内部端口绑定到指定的主机端口
+使用docker run之后如果使用docker ps 无法看到是否有在进行的容器，可以使用docker ps -a 查看所有曾经的docker
+使用-it命令可以进入交互模式，但是退出交互模式之后，就会释放相应的容器
+
+
 
 保存, 恢复镜像信息
 docker save/load
