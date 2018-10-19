@@ -75,3 +75,22 @@ https://blog.csdn.net/zziahgf/article/details/72578147
 
 容器Dockerfile解析
 https://developer.huawei.com/ict/forum/thread-22039.html
+
+外部访问容器：https://yeasy.gitbooks.io/docker_practice/network/port_mapping.html
+最主要是使用-p/-P参数实现容器对外的映射
+
+容器之间的互连
+首先创建网络
+docker network create -d bridge my-net
+启动docker，并加入创建的网络
+docker run -it --rm --name busybox1 --network my-net busybox sh
+docker run -it --rm --name busybox2 --network my-net busybox sh
+
+验证方式：在互相的交互页面进行ping 对方
+# ping busybox2
+PING busybox2 (172.17.0.3): 56 data bytes
+64 bytes from 172.17.0.3: seq=0 ttl=64 time=0.133 ms
+64 bytes from 172.17.0.3: seq=1 ttl=64 time=0.111 ms
+
+配置DNS：https://yeasy.gitbooks.io/docker_practice/network/dns.html
+
