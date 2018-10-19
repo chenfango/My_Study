@@ -40,6 +40,8 @@ docker save/load
 操作容器状态
 docker start/stop/pause/unpause/kill/restart CONTAINER_ID
 
+docker tag :http://www.runoob.com/docker/docker-save-command.html
+
 
 https://www.w3cschool.cn/use_docker/use_docker-cjka27zg.html
 
