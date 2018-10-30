@@ -1,0 +1,12 @@
+前提：将jenkins A serve的Job 迁移至Jenkins B server的步骤
+
+https://www.cnblogs.com/topplay/p/3899330.html
+
+主要思路：将jenkins的job 目前从A Server迁移至B Server中。
+
+然后重启jenkins。
+重启方式有如下几种：
+
+1、在web 页面上/restart
+2、重启docker
+3、系统管理——读取设置
