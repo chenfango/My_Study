@@ -1,0 +1,14 @@
+https://blog.csdn.net/qq_37467907/article/details/79537801
+
+
+编辑文件
+vim /etc/systemd/system/docker.service.d/override.conf
+
+
+执行
+systemctl daemon-reload
+systemctl restart docker.service
+
+验证
+
+ps aux|grep dockerd
