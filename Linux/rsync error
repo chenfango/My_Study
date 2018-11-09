@@ -1,0 +1,7 @@
+
+报错
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1178) [sender=3.1.2]
+
+原因是接受方没有写权限
+
+在接收方的路径下授权写权限，比如暂时开始777
