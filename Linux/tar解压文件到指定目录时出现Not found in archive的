@@ -1,0 +1,5 @@
+使用tar解压文件到指定目录时出现Not found in archive的解决方法
+
+解决方法：加-C（大写）
+
+tar zxvf jenkins.tar.gz -C /wls/jenkins_home/
