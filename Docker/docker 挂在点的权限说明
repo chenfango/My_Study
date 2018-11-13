@@ -1,0 +1,8 @@
+https://www.cnblogs.com/ivictor/p/4834864.html
+
+一、容器目录不可以为相对路径
+
+二、宿主机目录如果不存在，则会自动生成
+
+三、如果在容器内修改了目录的属主和属组，对应目录需要UID和GID一致即可，username和groupname可以不一致
+
