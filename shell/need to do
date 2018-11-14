@@ -1,0 +1,31 @@
+for app in `cat test.txt`
+do
+  appname=`echo $app|cut -d, -f1`
+  tag=`echo $app|cut -d, -f2`
+
+echo $appname
+echo $tag
+   #json='{"parameter": [{"name":"NAME", "value":$appname}, {"name":"TAG", "value":$tag}, {"name":"NAMESPACE", "value":"job"}]}'
+   json0="json="
+   json1='{\"parameter\": [{\"name\":\"NAME\", \"value\":'
+   json2='}, {\"name\":\"TAG\", \"value\":'
+   json3='}, {\"name\":\"NAMESPACE\", \"value\":\"job\"}]}'
+   json="\""$json1"\""$appname"\""$json2"\""$tag"\""$json3"\""
+   echo $json
+   curl -X POST http://172.22.129.7:9999/job/build_jobzone/build \
+   -d $json
+done
+
+
+#for app in `cat test.txt`
+for app in `cat a.txt`
+do
+  appname=`echo $app|cut -d, -f1`
+  tag=`echo $app|cut -d, -f2`
+#  echo $appname
+#  echo $tag
+  input="json='{\"parameter\": [{\"name\":\"NAME\", \"value\":\"$appname\"}, {\"name\":\"TAG\", \"value\":\"$tag\"}, {\"name\":\"NAMESPACE\", \"value\":\"job\"}]}'"
+  cmd="curl -X POST http://172.22.129.7:9999/job/build_jobzone2/build --data-urlencode $input"
+  echo $cmd >> /root/apprun.sh
+  #echo $cmd >> /root/app/$appname.sh
+done
