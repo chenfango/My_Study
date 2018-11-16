@@ -1,0 +1,9 @@
+pip在官网上的利用包进行python的编译安装的。
+
+问题：服务器上curl 对应的地址无法连接响应
+
+解决方法：利用软件包源进行安装
+
+Ubuntu：apt-get install python-pip
+
+redhat: yum install python-pip
