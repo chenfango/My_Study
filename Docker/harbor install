@@ -1,0 +1,58 @@
+Harbor的搭建
+
+1、	开启host机器的yum软件缓存。编辑保存后，设置立刻生效。
+# vi /etc/yum.conf
+keepcache=1     ## keepcache 默认是0
+
+2、	检查操作系统版本，如果是redhat推荐使用redhat 7或更高版本
+链接：https://doc.yonyoucloud.com/doc/chinese_docker/installation/redhat.html
+
+3、	检查机器配置，如下所示是官网推荐配置，https://goharbor.io/
+4、	Harbor安装链接---> https://github.com/goharbor/harbor/blob/master/docs/installation_guide.md
+ 
+5、	查看Python 版本
+# python
+Python 2.7.5 (default, Aug  2 2016, 04:20:16)
+
+6、	查看docker版本
+# docker --version
+Docker version 1.12.6, build 88a4867/1.12.6
+
+7、	安装docker-compose
+# curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# 或者从页面上下载下来后，上传至/usr/local/bin/，并重命名为docker-compose
+# chmod +x /usr/local/bin/docker-compose
+# docker-compose --version
+docker-compose version 1.23.1, build b02f1306
+8、	验证是否安装openssl
+# openssl version
+OpenSSL 1.0.1e-fips 11 Feb 2013
+
+9、	下载harbor的版本并进行配置
+从官网下载harbor，https://github.com/goharbor/harbor/releases
+# tar xvf harbor-offline-installer-v1.6.2.tgz
+# cd harbor
+# vi harbor.cfg
+
+如下参数必须需要须改
+hostname = 172.22.129.4 ##切记这行不要复制一行注释掉进行备份，会报错Please set hostname and other necessary attributes in harbor.cfg first. DO NOT use localhost or 127.0.0.1 for hostname, because Harbor needs to be accessed by external clients.
+ui_url_protocol
+db_password = xxx
+max_job_workers = 10
+customize_crt
+ssl_cert
+ssl_cert_key
+secretkey_path= /var/lib/harbor ## 远程密钥加密解密存储目录
+log_rotate_count
+log_rotate_size
+
+其他为可选参数
+self_registration = off
+token_expiration = 1576800
+project_creation_restriction = adminonly
+
+修改docker-compose.yml 将 /data/ 替换成 /var/lib/harbor/
+
+10、运行./install.sh
+
