@@ -1,5 +1,4 @@
 Harbor的搭建
-
 1、	开启host机器的yum软件缓存。编辑保存后，设置立刻生效。
 # vi /etc/yum.conf
 keepcache=1     ## keepcache 默认是0
@@ -52,7 +51,40 @@ self_registration = off
 token_expiration = 1576800
 project_creation_restriction = adminonly
 
-修改docker-compose.yml 将 /data/ 替换成 /var/lib/harbor/
 
-10、运行./install.sh
+10、修改docker-compose.yml和./prepare将 /data/ 替换成 /var/lib/harbor/
+
+11、运行./install.sh
+	# ./install.sh
+12、登陆UI页面
+在设置中harbor.cfg中设置的是http还是https
+ 
+
+13、查看运行情况
+# docker-compose ps
+哪台主机需要登陆刚刚搭建的Harbor，就需要更改docker进程启动的相关参数
+OPTIONS新增--insecure-registry 172.22.129.4
+# vi /usr/lib/systemd/system/docker.service
+# systemctl stop docker.service
+# systemctl daemon-reload
+# systemctl start docker.service
+
+14、上传镜像
+在UI中创建jenkins的测试项目
+ 
+# docker tag 172.22.129.9/jenkins/jenkins:v0.0.4 172.22.129.4/jenkins/jenkins:v0.0.1
+# docker push 172.22.129.4/jenkins/jenkins:v0.0.1
+
+15、拉取镜像
+# docker pull 172.22.129.4/jenkins/jenkins:v0.0.1
+ 
+
+16、更新配置
+# docker-compose down –v
+# vi harbor.cfg
+# ./prepare
+# docker-compose up –d
+
+
+
 
