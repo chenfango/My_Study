@@ -1,0 +1,9 @@
+场景：本地和linux端的文件互传
+
+yum安装一款工具。
+
+#yum install  lrzsz -y
+
+如果需要上传文件到linux端，在linux上输入rz，如果需要覆盖原文件输入 rz -y
+
+如果需要将文件从linux端传到本地，输入sz
