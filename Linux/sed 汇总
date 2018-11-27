@@ -6,3 +6,15 @@ sed -i "1iJobname,NodeNumber,Result,Buildtime,StartTime,project,slave" /tmp/jenk
 sed -i 's/^/<添加的内容>&/g' 文件名
 文件增添第一列
 sed -i 's/^/2 /g' text
+
+两个变量替换
+
+job_path="/wls/jenkins_home/jobs"
+
+orgwords="<disabled>false</disabled>"
+replacewords="<disabled>true</disabled>"
+for job in `ls $job_path | grep lufax.build.trigger`
+do
+sed "s~$orgwords~$replacewords~" $job_path/$job/config.xml
+done
+
