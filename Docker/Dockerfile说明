@@ -1,0 +1,45 @@
+链接http://seanlook.com/2014/11/17/dockerfile-introduction/：
+
+FROM
+FROM  <image>
+或
+FROM <image>:<tag>
+在Dockerfile中第一条非注释INSTRUCTION一定是FROM，它决定了以哪一个镜像作为基准，
+<image>首选本地是否存在，如果不存在则会从公共仓库下载（当然也可以使用私有仓库的格式）。
+
+RUN
+RUN <commnad>
+或
+RUN ["executable", "param1", "param2"]
+RUN指令会在当前镜像的顶层执行任何命令，并commit成新的（中间）镜像，提交的镜像会在后面继续用到。
+上面看到RUN后的格式有两种写法。
+
+shell格式，相当于执行/bin/sh -c "<command>"：
+
+RUN apt-get install vim -y
+exec格式，不会触发shell，所以$HOME这样的环境变量无法使用，但它可以在没有bash的镜像中执行，而且可以避免错误的解析命令字符串：
+
+RUN ["apt-get", "install", "vim", "-y"]
+或
+RUN ["/bin/bash", "-c", "apt-get install vim -y"]  与shell风格相同
+
+ADD
+ADD <src>... <dest>
+将文件<src>拷贝到container的文件系统对应的路径<dest>下。
+<src>可以是文件、文件夹、URL，对于文件和文件夹<src>必须是在Dockerfile的相对路径下（build context path），即只能是相对路径且不能包含../path/。
+<dest>只能是容器中的绝对路径。如果路径不存在则会自动级联创建，根据你的需要是<dest>里是否需要反斜杠/，习惯使用/结尾从而避免被当成文件。
+另外ADD支持远程URL获取文件，但官方认为是strongly discouraged，建议使用wget或curl代替。
+ADD还支持自动解压tar文件，比如ADD trusty-core-amd64.tar.gz /会线自动解压内容再COPY到在容器的/目录下。
+
+COPY
+Same as ‘ADD’ but without the tar and remote url handling.
+
+COPY的语法与功能与ADD相同，只是不支持上面讲到的<src>是远程URL、自动解压这两个特性，但是Best Practices for Writing Dockerfiles建议尽量使用COPY，
+并使用RUN与COPY的组合来代替ADD，这是因为虽然COPY只支持本地文件拷贝到container，但它的处理比ADD更加透明，建议只在复制tar文件时使用ADD，如ADD trusty-core-amd64.tar.gz /。
+
+WORKDIR
+WORKDIR指令用于设置Dockerfile中的RUN、CMD和ENTRYPOINT指令执行命令的工作目录(默认为/目录)，该指令在Dockerfile文件中可以出现多次，如果使用相对路径则为相对于WORKDIR上一次的值，
+例如WORKDIR /a，WORKDIR b，RUN pwd最终输出的当前目录是/a/b。（RUN cd /a/b，RUN pwd是得不到/a/b的）
+
+USER
+为运行镜像时或者任何接下来的RUN指令指定运行用户名或UID：
