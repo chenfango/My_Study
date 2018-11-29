@@ -16,3 +16,12 @@ WORKDIR /wls/atlassian/confluence
 CMD /wls/atlassian/confluence/bin/start-confluence.sh
 
 EXPOSE 8000
+
+
+启动脚本
+docker run -dti --name  confluence1 \
+-p 9999:8000 \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /wls/tem/application-data:/wls/atlassian/application-data \
+-v /wls/tem/logs:/wls/atlassian/confluence/logs \
+172.22.129.9/test/confluence:v0.0.1 /bin/bash
