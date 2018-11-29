@@ -1,0 +1,18 @@
+FROM 172.22.129.9/library/redhat:6.5
+
+RUN \
+mkdir -p /wls/atlassian/ \
+mkdir -p /wls/atlassian/confluence \
+mkdir -p /wls/atlassian/application-data \
+&& groupadd -g 501 confluence \
+&& useradd -u 501 -d /home/confluence -g 501 confluence
+
+
+COPY confluence /wls/atlassian/confluence
+
+
+WORKDIR /wls/atlassian/confluence
+
+CMD /wls/atlassian/confluence/bin/start-confluence.sh
+
+EXPOSE 8000
