@@ -13,3 +13,10 @@ redhat: yum install python-pip
 /usr/bin/which: no pip in (/sbin:/bin:/usr/sbin:/usr/bin)
 
 则需要把相应的pip 链接放在如下的目录中一个/sbin:/bin:/usr/sbin:/usr/bin
+
+
+实在无法联网的话：
+
+下载对应的pip包，然后解压
+
+python setup.py install
