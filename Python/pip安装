@@ -8,7 +8,7 @@ Ubuntu：apt-get install python-pip
 
 redhat: yum install python-pip
 
-安装后如果仍然报错
+安装后如果仍然报错/sbin:/bin:/usr/sbin:/usr/bin
 # which pip
 /usr/bin/which: no pip in (/sbin:/bin:/usr/sbin:/usr/bin)
 
