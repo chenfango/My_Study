@@ -7,3 +7,9 @@ pip在官网上的利用包进行python的编译安装的。
 Ubuntu：apt-get install python-pip
 
 redhat: yum install python-pip
+
+安装后如果仍然报错
+# which pip
+/usr/bin/which: no pip in (/sbin:/bin:/usr/sbin:/usr/bin)
+
+则需要把相应的pip 链接放在如下的目录中一个/sbin:/bin:/usr/sbin:/usr/bin
