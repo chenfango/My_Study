@@ -1,0 +1,4 @@
+方法二：使用cp命令复制的时候，只能排除一个目录不被复制，如果想排除两个或者多个目录的话，就需要使用rsync命令来实现了，看下面的例子
+如果要排除/home/data目录下面的a、b、c、三个目录，同时拷贝其它所有目录，执行以下命令
+yum install rsync   #安装rsync
+rsync -av --exclude data/a  --exclude data/b  --exclude data/c  data   /bak
