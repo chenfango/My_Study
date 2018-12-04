@@ -9,7 +9,7 @@ def job_create(job,server,jobonly):
         jobname=str(server.get_job_name(job))
         if jobname == "None":
                 print "This job not exits, will create"
-                server.copy_job("lufax.build.basic",job)
+                server.copy_job("basic",job)
                 config_old=server.get_job_config(job)
                 config_new=config_old.replace('basic',jobonly)
                 server.reconfig_job(job, config_new)
@@ -21,18 +21,18 @@ def initsource(jobonly,gitrepo):
         servers=['x.x.x.x','x.x.x.x','x.x.x.x','x.x.x.x']
         for i in range(len(servers)):
                 gitpath="/wls/source/"
-                os.system('ssh wls81opr@%s "cd %s; git clone %s "' %(servers[i],gitpath,gitrepo))
+                os.system('ssh username@%s "cd %s; git clone %s "' %(servers[i],gitpath,gitrepo))
 
 
 
 if __name__ =='__main__':
-	url="http://jenkins.lujs.cn/"
+	url="http://127.0.0.1:8080/"
         user="xxx"
 	password="xxxx"
   #这里使用user-id和user-token，这里token的获取方式通过点击右上角“用户”——设置——showAPItoken
         server=jenkins.Jenkins(url,user,password)
         jobonly=sys.argv[1]
-        job="lufax.build."+jobonly
+        job="build."+jobonly
         job_create(job,server,jobonly)
         gitrepo=sys.argv[2]
         initsource(jobonly,gitrepo)
