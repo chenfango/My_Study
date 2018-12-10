@@ -1,0 +1,8 @@
+https://github.com/goharbor/harbor/issues/3532
+
+UI的点击镜像删除后其实后端并没有直接删除数据，只是删除了软连接
+
+删除的API
+
+curl -X DELETE  'http://127.0.0.1/api/repositories/<job>%2F<prodopr-svc>/tags/<dev_20181107_01>'  -i -u "admin:xxxxx"
+                                                     项目      项目中job           版本号
