@@ -1,0 +1,45 @@
+基于Grafana和influxdb的jenkins监控报表
+
+1.	Influxdb的搭建和配置
+# mkdir -p /wls/influxdb 
+# docker pull 172.22.129.9/test/influxdb:latest
+# docker run -d -p 8086:8086 --name=influxdb -v /wls/influxdb:/var/lib/influxdb  172.22.129.9/test/influxdb:latest
+
+2.	搭建后确认influxDB的信息
+配置信息
+# docker exec -it d8a56c790997 /bin/bash
+root@d8a56c790997:/# influxd config
+IP 信息
+# docker inspect --format '{{ .NetworkSettings.IPAddress }}'  influxdb
+为jenkins 创建数据库和用户
+# docker exec -it influxdb /bin/bash
+root@f6bd37f20652:/# influx
+> create database jenkins_data
+> create user jenkins with password 'xxxxxxx'
+> grant all on jenkins_data to jenkins
+> show grants for Jenkins
+database	privilege
+jenkins_data	ALL PRIVILEGES
+
+3.	Grafana的搭建
+# docker pull 172.22.129.9/test/grafana:latest
+# docker run -d --name=grafana -p 3000:3000 172.22.129.9/test/grafana:latest
+4.	打开浏览器http://127.0.0.1:3000，输入初始账号和密码 admin:admin，会要求更改密码。直接更改密码Pa...
+5.	设置数据库
+主页—Add data source—URL中添加IP<注意不要写127.0.0.1>—添加数据库、用户、密码—测试
+ 
+  
+6.	在jenkins中安装InfluxDB插件
+插件下载地址：http://updates.jenkins-ci.org/download/plugins/
+点击jenkins“系统管理”—“管理插件”—“高级”—“上传插件”—“上传”
+注意：插件安装需要在没有任务执行时进行，否则会对后续的job调度有影响
+7.	Jenkins中配置
+在"Manage Jenkins" > "Configure System" > scroll down to section "influxdb target"
+参考链接3
+
+
+参考链接：
+链接1：https://wiki.jenkins.io/display/JENKINS/InfluxDB+Plugin
+链接2：http://updates.jenkins-ci.org/download/plugins/
+链接3：https://stackoverflow.com/questions/51409370/issue-in-displaying-jenkins-build-data-to-influxdb
+
