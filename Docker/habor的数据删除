@@ -6,3 +6,25 @@ UI的点击镜像删除后其实后端并没有直接删除数据，只是删除
 
 curl -X DELETE  'http://127.0.0.1/api/repositories/<job>%2F<prodopr-svc>/tags/<dev_20181107_01>'  -i -u "admin:xxxxx"
                                                      项目      项目中job           版本号
+
+
+
+批量化删除
+
+#!/bin/bash
+
+curl -s -XGET http://127.0.0.1/api/search?q=business |grep repository_name |awk '{print $2}' |sed s/^\"//g|sed s/\",$//g > list.txt
+
+tag_list=()
+
+for i in `cat list.txt`
+do
+#  echo "Will Check $i Tag" 
+  tag_list=`curl -s -XGET http://127.0.0.1/api/repositories/$i/tags|egrep -v "\]|\[" |sed s/\"//g |sed s/,//g`
+#  echo $tag_list
+  echo "Will delete ${#tag_list[@]} images in $i"
+  for l in ${tag_list[@]}
+  do
+    curl -u "admin:xxxxx" -s http://127.0.0.1/api/repositories/$i/tags/$l -XDELETE 
+  done
+done
