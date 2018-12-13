@@ -1,0 +1,3 @@
+harbor版本查询
+
+ 查看配置目录下的文件，docker-compose.yml，里面有harbor的版本
