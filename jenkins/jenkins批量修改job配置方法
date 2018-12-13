@@ -3,9 +3,12 @@
 1、将原先的config.xml文件备份
 2、手动修改好配置，然后diff 两个配置文件的不同
 3、将不同的内容贴到其他对应的job的config.xml对应位置上
-
+优点：可以支持任何修改
+缺点：更改时候要小心，否则会引起报错
 
 方法二：使用插件Configuration Slicing Plugin
 
 https://wiki.jenkins.io/display/JENKINS/Configuration+Slicing+Plugin
+缺点，可以更改的项目比较有限
+有点 UI支持更改，操作简便
 
