@@ -1,0 +1,12 @@
+##功能：替换某个文件中的数据。经常使用linux下的sed，但是sed对于变量而言进行存在比较多的问题。这里使用python
+
+
+def repleacedata(file_old,file_new,old_words,new_words):
+        f_old=open(file_old,'r+')
+        f_new=open(file_new,'r+')
+        new_words='    <jenkinsci.plugins.influxdb.InfluxDbPublisher plugin="influxdb@1.20"> \n  '
+        old_words="</publishers>"
+        s=f_old.read()
+        f_new.write(s.replace(ww,bb))
+        f_old.close()
+        f_new.close()
