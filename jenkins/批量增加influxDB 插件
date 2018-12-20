@@ -1,0 +1,43 @@
+#!/usr/bin/python
+
+import os
+import sys
+import time
+
+def repleacedata(file_old,file_new,old_words,new_words):
+        f_old=open(file_old,'r+')
+        f_new=open(file_new,'r+')
+        s=f_old.read()
+        if old_words in s:
+        #       print file_new,"has been backuped",file_old
+                print file_new, "can been added directly"
+                f_new.write(s.replace(old_words,new_words))
+                f_old.close()
+                f_new.close()
+        else :
+                print file_old,"no emails setup, please add"
+
+
+
+if __name__ =='__main__':
+        day=time.strftime("%G%m%d")
+        old_words="</publishers>"
+        new_words='    <jenkinsci.plugins.influxdb.InfluxDbPublisher plugin="influxdb@1.20"> \n      <selectedTarget>InfluxDB</selectedTarget>\n      <customProjectName></customProjectName> \n      <customPrefix></customPrefix> \n      <jenkinsEnvParameterField></jenkinsEnvParameterField> \n       <jenkinsEnvParameterTag></jenkinsEnvParameterTag> \n    </jenkinsci.plugins.influxdb.InfluxDbPublisher> \n  </publishers>'
+        path="/wls/jenkins_home/jobs/"
+        #path="/tmp/test/"
+        jobs=os.listdir(path)
+        for i in range(len(jobs)-1):
+                job_path=path+jobs[i]
+                config_old=job_path+"/"+"config.xml"
+                print config_old
+                if os.path.exists(config_old) :
+                        config_ch=config_old+day
+                        print config_old,"has been backuped",config_ch
+                        os.rename(config_old,config_ch)
+                        os.system('touch %s' %(config_old))
+                        file_old=config_ch
+                        file_new=config_old
+                        repleacedata(file_old,file_new,old_words,new_words)
+                        print config_old,"has been update"
+                else :
+                        print config_old,"is not exits"
