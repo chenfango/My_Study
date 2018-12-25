@@ -30,3 +30,8 @@ post_data={
 }
 res=requests.post(url="http://127.0.0.1:5000/do_somthing",data=post_data)
 print(res.text)
+
+
+##后台运行
+
+nohup python -u xxxxx.py > log.log 2>&1 &
