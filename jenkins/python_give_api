@@ -1,0 +1,99 @@
+##提供api 自动创建job
+
+#!/usr/bin/python
+
+__author__ = 'zhenggongzi'
+
+import os
+import time
+import traceback
+
+import jenkins
+import requests
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+
+def job_create(server, basicjob, applicationname, git_repository_path):
+    job = "lufax.build." + applicationname
+    jobname = str(server.get_job_name(job))
+    if jobname == "None":
+        print "This job does not exit, will create"
+        server.copy_job(basicjob, job)
+        config_old = server.get_job_config(job)
+        old_appname = str(basicjob.split('.')[len(basicjob.split('.')) - 1])
+        config_new = config_old.replace(old_appname, applicationname)
+        server.reconfig_job(job, config_new)
+        print job, "has been created"
+    else:
+        print "This job exits, please check the jobname"
+
+
+def git_source(git_repository_path):
+    source_path = "/wls/source/"
+    jenkins_slaves = ['127.0.0.1']
+    for i in range(len(jenkins_slaves)):
+        print('ssh wls81opr@%s "cd %s; git clone %s "' % (jenkins_slaves[i], source_path, git_repository_path))
+        os.system('ssh wls81opr@%s "cd %s; git clone %s "' % (jenkins_slaves[i], source_path, git_repository_path))
+        print jenkins_slaves[i], "Code has been cloned, not need clone again"
+
+def post2brood(static_file_names, static_file_paths):
+    user_name = "xxxxx"
+    url = "http://lujs.cn/lts/brood/interfaceapp/add_static_unzip_map"
+    data = {'user_name': user_name, 'static_file_names': static_file_names, 'static_file_paths': static_file_paths}
+    rsp = requests.post(url, data)
+    if rsp.status_code == "200":
+        print "ZIP  has been added in brood"
+    else:
+        print "ZIP failed"
+
+@app.route("/create_job", methods=["POST"])
+def main():
+    code = 200
+    message = 'create job success.'
+    success = True
+    try:
+        params = request.get_json()
+        start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        print "%s create_job received params: %s" % (start, params)
+        print '%s create_job start!' % start
+        url = "http://127.0.0.1:8080/"
+        user = "lufax"
+        password = "xxxxx"
+        server = jenkins.Jenkins(url, user, password)
+        basicjob = "lufax.build.basic"
+        applicationname = params.get('applicationname')
+        git_repository_path = params.get('git_repository_path')
+        is_zip = params.get('is_zip')
+        if applicationname != "" and git_repository_path != "":
+            job_create(server, basicjob, applicationname, git_repository_path)
+            print "Now start to git clone"
+            git_source(git_repository_path)
+            print applicationname, "clone finished"
+            if is_zip == "yes":
+                static_file_names = params.get('static_file_names')
+                static_file_paths = params.get('static_file_paths')
+                if static_file_names != "" and static_file_paths != "":
+                    print "This project is zip,need add in brood"
+                    post2brood(static_file_names, static_file_paths)
+                    print "This project is zip success and finished"
+                else:
+                    print "parameter Static_file_names and Static_file_paths not input, pls input"
+
+            else:
+                print "This project is not zip, End of initialization"
+        else:
+            print "applicationname or  git_repository_path is null"
+        end = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        print "%s creat job end!" % end
+    except Exception as e:
+        code = 500
+        message = traceback.format_exc()
+        success = False
+        print "create job error. ret: %s" % traceback.format_exc()
+
+    return jsonify({"code": code, "message": message, "success": success})
+    
+    if __name__ == '__main__':
+    app.run(host = '0.0.0.0',port = 6001)
