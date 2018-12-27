@@ -1,1 +1,4 @@
 This path is used to place the docker file
+
+
+harbor中的所有配置文件信息在两个文件中，一个是harbor.cfg，一个是docker-compose.yml
