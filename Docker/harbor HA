@@ -1,0 +1,14 @@
+使用lb-harbor1-harbor2
+
+1、登录会报错401 错误
+解决方法：将所有节点上使用同一套root.crt和private_key.pem。
+即将一个harbor node（harbor.cfg中custom_crt=true的那个）
+上的 common/config/ui/private_key.pem和 common/config/registry/root.crt复制到其他harbor node;然后重建各harbor实例中的容器
+
+docker login -u admin -p "xxxx" harbor
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Login Succeeded
+
+
+2、docker pull 和 docker push 报错
+Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp 34.233.151.211:443: getsockopt: connection refused
