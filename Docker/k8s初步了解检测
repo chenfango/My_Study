@@ -1,0 +1,53 @@
+1、	作mater节点的机器能不能做node节点。
+A：可以，但不建议。Master是集群的控制节点，负责整个集群的管理和控制，基本上kubernets所有的控制命令都是发给master。所以master相当于是一个集群的首脑，太重要，建议使用独立一台server进行配置。
+2、	K8S master有哪三个服务构成？node节点有哪三个服务构成？这些服务停止分别有什么影响？
+A：mater 三个服务及功能如下：
+序号	名称	作用
+1	Kube-apiserver	类资源对象（Pod，RC，service）的增，删，改，查及HTTP REST接口。
+2	Kube-controller-manage	所有资源的自动化控制中心，资源对象“大总管”
+3	Kube-scheduler	Pod的调度
+
+Node的三个服务及功能如下：
+序号	名称	作用
+1	Kubelet	负责pod对应容器的创建、启停等任务，同时与master节点密切协作，实现集群管理的基本功能
+2	Kube-proxy	实现kubernetes service的通信与负载均衡机制的重要组件
+
+3、	Linux如何实现机器重启后，服务自启动？如果多个服务之间有启动顺序改如何实现？
+A：方法一：将相应的可执行应用程序链接到/etc/rc.d/rc*.d中，其中0-6就是执行的顺序
+方法二：chkconfig，等级的话添加参数—level
+4、	一个应用在K8S部署，集群资源显示充足，却找不到满足要求的节点，可能是什么原因？
+A：可能原因一：node上所有的pod实际使用资源少，但是requests的cpu或者mem两者中至少一个资源已经达到各个node的物理资源配置总和
+可能原因二：改应用request的cpu或者mem资源过高，实际现状中没有达到匹配的
+可能原因三：无法同时配置该request资源配置所有副本数的pod
+Label
+
+5、	K8S中container、pod、namespace、deployment、replicaset、daemonset？
+A：container 容器，构成服务的基础
+		Pob：一组container构成，提供某一种服务
+		Namespace：用于租户隔离，可以理解为某一类环境，比如test环境，开发环境
+		Deployment：更新RC和Pod的机制，叫做Deployment，主要作用集群状态在一个可控的速度下逐步更新成你所期望的集群状态，比如滚动升级。
+		Replicaset：pod的副本数配置
+		Daemonset：DaemonSet保证在每个Node上都运行一个容器副本，常用来部署一些集群的日志、监控或者其他系统管理应用。
+		
+6、	列出通过kubectl查看某个namespace里某个pod的信息命令？
+A: # kubectl get/describle pod xxxpods –namespace=xxxx
+7、	Pod的livenessprobe 和 readinessprobe的区别？
+Livenessprbe：用于判断容器是否存活（running状态）。如果探测到容器不健康，将kill该容器，并根据容器的重启策略重启。如果一个容器不包含livenessprbe探针，则认为该容器一直是running状态
+Readinessprobe：用于判断容器是否完成启动（ready状态），可以接受请求。如果探测失败，则pod的状态被修改。
+实践上可能不会实现如下操作
+Endpoint controller将从service的endpoint中删除包含改容器所在pod的endpoint。
+
+
+8、	 什么是正向代理和反向代理？
+A：正向代理：正向代理 是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。正向代理的用途：（1）访问原来无法访问的资源，如google；（2） 可以做缓存，加速访问资源；（3）对客户端访问授权，上网进行认证；（4）代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息
+
+反向代理：反向代理（Reverse Proxy）实际运行方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器。保证内网的安全，可以使用反向代理提供WAF功能，阻止web攻击。负载均衡，通过反向代理服务器来优化网站的负载。
+
+9、	Service相当于load balancer 吗？它与ingress（nginx）适用场景？
+A: service相当于正向代理，ingress(nginx)相当于反向代理
+load balance是service的一部分功能，不是全部。
+Service用于调度分配到后端的服务时，假如后端存在多个副本或者多个同一功能的服务，此时相当于load balance。当后端服务如果仅只有一个副本时候，假如服务所在的node宕了，此时service会重新调度到其他的node上去。
+
+10、	从整个系统设计角度考虑，除了K8S提供的核心功能，还需要实现那些功能或者服务才能算是一套系统？
+A: 管理控制平台、监控报警、log日志分析、网络状态、业务状态。
+
