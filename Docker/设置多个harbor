@@ -1,0 +1,8 @@
+vi /usr/lib/systemd/system/docker.service
+
+添加多个--insecure-registry
+
+ExecStart=/usr/bin/dockerd  --insecure-registry 50.68.0.6 --insecure-registry 50.68.0.5 --insecure-registry 50.68.0.4
+
+#systemctl daemon-reload
+#systemctl restart docker.service
