@@ -1,0 +1,9 @@
+harbor 1.6+版本，底层框架全部已变更，其中API接口也变化了。详情如下
+
+1、project信息
+
+
+2、
+
+tag 号
+curl --insecure -X GET  https://127.0.0.1/api/repositories/job/ztcs-app/tags
