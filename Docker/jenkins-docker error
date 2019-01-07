@@ -1,0 +1,6 @@
+ln: failed to create symbolic link ‘/sys/fs/cgroup/cpu,cpuacct/cpuacct,cpu’: Operation not permitted
+
+
+暴力解决方式：
+重启docker 服务
+# systemctl restart docker
