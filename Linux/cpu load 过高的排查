@@ -1,0 +1,26 @@
+1、cpu load 的概念介绍
+
+
+http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages
+
+简单的说，cpu load 过高就是任务量超过了其处理的能力，就会导致cpu 过高
+
+其中需要注意的是load average中1表示1个cpu 使用达到100%
+如果是多核，比如8核，其满载能力是8
+
+
+2、cpu load 过高的排查思路
+
+1、使用top 命令查看哪个进程使用的cpu过多
+top -c 排除使用前几名的进程
+
+同时观看时那一项cpu的占用比较多
+%Cpu(s): 30.7 us,  7.0 sy,  0.0 ni, 51.0 id,  8.7 wa,  0.0 hi,  2.7 si,  0.0 st
+us表示用户
+sy 内核
+ni 改变过优先级进程占用cpu百分比
+id空闲
+wa IO等待
+hi 硬中断
+si 软中断
+2、
