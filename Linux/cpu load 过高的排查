@@ -23,4 +23,7 @@ id空闲
 wa IO等待
 hi 硬中断
 si 软中断
-2、
+
+
+2、查看对应进程有几个线程，以及对应的线程占用cpu情况
+ps -mp pid -o THREAD,tid,time
