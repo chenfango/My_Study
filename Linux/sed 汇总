@@ -21,3 +21,6 @@ done
 删除文中某行至某行
 删除第M到N行：
 sed -i 'M,Nd' filename
+
+复制某几行到另一个文件
+sed -n '2,5p' file1 >>file2
