@@ -24,3 +24,11 @@ sed -i 'M,Nd' filename
 
 复制某几行到另一个文件
 sed -n '2,5p' file1 >>file2
+
+注释某几行
+
+sed 's/^/#/g' filename
+
+取消注释某几行
+
+sed 's/^#/^/g' filename
