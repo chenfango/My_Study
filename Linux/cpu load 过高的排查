@@ -28,6 +28,6 @@ si 软中断
 2、查看对应进程有几个线程，以及对应的线程占用cpu情况
 ps -mp pid -o THREAD,tid,time
 
-3、查看对应进程的堆栈情况
+3、查看对应进程的堆情况
 
 pstack PID
