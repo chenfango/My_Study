@@ -1,4 +1,4 @@
-os.path是关于目录的处理
+os.path是关于目录的处理 http://blog.51cto.com/wangwei007/1104940
 
 os.path.dirname(path) 
 返回path的目录。其实就是os.path.split(path)的第一个元素
