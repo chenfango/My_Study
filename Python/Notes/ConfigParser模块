@@ -1,0 +1,62 @@
+https://www.cnblogs.com/lovychen/p/9431359.html
+读取配置文件
+
+read(filename) 直接读取ini文件内容
+sections() 得到所有的section，并以列表的形式返回
+options(section) 得到该section的所有option
+items(section) 得到该section的所有键值对
+get(section,option) 得到section中option的值，返回为string类型
+getint(section,option) 得到section中option的值，返回为int类型
+getfloat(section,option)得到section中option的值，返回为float类型
+getboolean(section, option)得到section中option的值，返回为boolean类型
+写入配置文件
+
+add_section(section) 添加一个新的section
+has_section(section) 判断是否有section
+set( section, option, value) 对section中的option进行设置
+remove_setion(section)删除一个section
+remove_option(section, option)删除section中的option
+write(fileobject)将内容写入配置文件。
+
+
+
+[Python]使用Python中的config配置
+Python中有ConfigParser类，可以很方便的从配置文件中读取数据（如DB的配置，路径的配置），所以可以自己写一个函数，实现读取config配置。
+
+config文件的写法比较简单，[section]下配置key=value，一下是例子：db.conf
+
+复制代码
+#配置数据库
+[database]
+dbhost=127.0.0.1
+dbport=3366
+dbname=test
+dbuser=test
+dbpassword=test
+dbcharset=utf8
+复制代码
+接着写一个读取config的方法模块
+
+复制代码
+#encoding:utf-8
+#name:mod_config.py
+
+import ConfigParser
+import os
+
+#获取config配置文件
+def getConfig(section, key):
+    config = ConfigParser.ConfigParser()
+    path = os.path.split(os.path.realpath(__file__))[0] + '/db.conf'
+    config.read(path)
+    return config.get(section, key)
+
+#其中 os.path.split(os.path.realpath(__file__))[0] 得到的是当前文件模块的目录
+复制代码
+ 
+
+当需要在文件中读取config的配置时，就载入这个模块，调用getConfig方法。
+
+import mod_config
+
+dbname = mod_config.getConfig("database", "dbname")
