@@ -1,0 +1,14 @@
+raceback (most recent call last):
+  File "getcmdb_online.py", line 21, in <module>
+    print appname,data[i]['context_path'],data[i]['type']
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u65e0' in position 0: ordinal not in range(128)
+
+
+解决方法：
+https://stackoverflow.com/questions/9942594/unicodeencodeerror-ascii-codec-cant-encode-character-u-xa0-in-position-20
+
+
+在前面添加
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
