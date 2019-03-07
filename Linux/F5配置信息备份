@@ -1,0 +1,8 @@
+1、 备份文件
+
+bigip_base.conf bigip.conf
+
+2、 备份方式
+
+免密码远程备份
+
