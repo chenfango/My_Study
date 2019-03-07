@@ -1,0 +1,8 @@
+---
+- hosts: test2
+  user: user
+  sudo: yes
+  sudo_user: root
+  tasks:
+    - name: push local folder to remote
+      synchronize: src=/tmp/hello dest=/tmp/hello
