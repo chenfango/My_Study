@@ -1,0 +1,22 @@
+str --- json
+
+import json
+
+json.loads()
+
+e.g
+
+>>> str = '{"accessToken": "521de21161b23988173e6f7f48f9ee96e28", "User-Agent": "Ap
+>>> j = json.loads(str)
+>>> type(j)
+<type 'dict'>
+
+
+json---str
+
+>>> j
+{u'accessToken': u'521de21161b23988173e6f7f48f9ee96e28', u'User-Agent': u'Apache-HttpClient/4.5.2 (Java/1.8.0_131)'}
+>>> type(j)
+<type 'dict'>
+>>> type(json.dumps(j))
+<type 'str'>
