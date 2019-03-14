@@ -2,8 +2,28 @@ harbor 1.6+版本，底层框架全部已变更，其中API接口也变化了。
 
 1、project信息
 
+http://127.0.0.1/pi/projects/
 
-2、
+具体project的信息
 
-tag 号
+http://127.0.0.1/pi/projects/{project_id}
+
+2、repositories
+
+查询某个project下的所有repositories
+
+
+
+3、tag
+
+tag 号总数
+http://127.0.0.1/api/search?q="job/ztcs-app"
+
+对应tag号的详情
 curl --insecure -X GET  https://127.0.0.1/api/repositories/job/ztcs-app/tags
+
+
+参考https://blog.csdn.net/u010278923/article/details/72514760
+
+
+
