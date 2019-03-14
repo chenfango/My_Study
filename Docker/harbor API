@@ -2,7 +2,7 @@ harbor 1.6+版本，底层框架全部已变更，其中API接口也变化了。
 
 1、project信息
 
-http://127.0.0.1/pi/projects/
+http://127.0.0.1/api/projects/
 
 具体project的信息
 
@@ -11,7 +11,7 @@ http://127.0.0.1/pi/projects/{project_id}
 2、repositories
 
 查询某个project下的所有repositories
-http://172.22.129.9/api/search?q=job
+http://172.22.129.9/api/search?q=<project>
 说明：结果是一个dict
 其中'repository'才是repositories
 
