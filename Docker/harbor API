@@ -11,7 +11,7 @@ http://127.0.0.1/pi/projects/{project_id}
 2、repositories
 
 查询某个project下的所有repositories
-http://172.22.129.9/api/search?q=<project>
+http://127.0.0.1/api/search?q=<project>
 说明：结果是一个dict
 其中'repository'才是repositories
 
