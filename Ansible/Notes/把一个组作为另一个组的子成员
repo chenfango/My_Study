@@ -1,0 +1,15 @@
+4.把一个组作为另一个组的子成员
+可以把一个组作为另一个组的子成员,以及分配变量给整个组使用. 这些变量可以给 /usr/bin/ansible-playbook 使用,但不能给 /usr/bin/ansible 使用:
+
+[atlanta]
+host1
+host2
+[raleigh]
+host2
+host3
+[southeast:children]
+atlanta
+raleigh
+
+
+http://wangshengzhuang.com/2017/05/14/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3/Ansible/Ansible%E4%B8%BB%E6%9C%BA%E6%B8%85%E5%8D%95Inventory%E6%96%87%E4%BB%B6hosts/
