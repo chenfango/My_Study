@@ -1,0 +1,44 @@
+https://blog.csdn.net/xsj_blog/article/details/79198325
+
+一、 切换到被copy的分支（master），并且从远端拉取最新版本
+
+$git checkout master
+$git pull
+
+二、从当前分支拉copy开发分支
+
+$git checkout -b dev
+Switched to a new branch 'dev'
+
+三、 把新建的分支push到远端
+
+$git push origin dev
+
+四、拉取远端分支
+
+$git pull
+
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+git branch --set-upstream-to=origin/<branch> dev
+
+经过验证，当前的分支并没有和本地分支关联，根据提示进行下一步：
+
+五、关联
+
+$git branch --set-upstream-to=origin/dev
+
+六、 再次拉取 验证
+
+$git pull
+--------------------- 
+作者：xsj_blog 
+来源：CSDN 
+原文：https://blog.csdn.net/xsj_blog/article/details/79198325 
+版权声明：本文为博主原创文章，转载请附上博文链接！
