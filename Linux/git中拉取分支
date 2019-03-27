@@ -1,5 +1,7 @@
 https://blog.csdn.net/xsj_blog/article/details/79198325
 
+https://blog.csdn.net/xhu_eternalcc/article/details/37730109
+
 一、 切换到被copy的分支（master），并且从远端拉取最新版本
 
 $git checkout master
@@ -37,8 +39,13 @@ $git branch --set-upstream-to=origin/dev
 六、 再次拉取 验证
 
 $git pull
---------------------- 
-作者：xsj_blog 
-来源：CSDN 
-原文：https://blog.csdn.net/xsj_blog/article/details/79198325 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+七、删除远程分支
+    git push origin :branch-name
+     冒号前面的空格不能少，原理是把一个空分支push到server上，相当于删除该分支。
+     
+ 八、删除本地分支
+  5、删除本地分支
+     执行git branch -d <分支名>
+     如果该分支没有合并到主分支会报错，可以用以下命令强制删除git branch -D <分支名>
