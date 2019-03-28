@@ -1,0 +1,17 @@
+1、read
+
+
+2、readlines
+  1）按行读取
+  2）结果是一个list，每一行都是list中一个元素
+  3）需要注意的是，文本末尾是否有\n，要记得去掉
+  
+  例如：
+  f = open(file,'r')
+  line = f.readlines()
+  ##去掉\n
+  for i in line：
+     line = i.strip("\n")
+
+
+3、readline
