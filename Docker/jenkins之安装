@@ -1,0 +1,22 @@
+官网链接：https://github.com/jenkinsci/docker
+
+
+其中插件的安装方法：
+Preinstalling plugins
+You can rely on the install-plugins.sh script to pass a set of plugins to download with their dependencies. 
+This script will perform downloads from update centers, and internet access is required for the default update centers.
+
+原理：
+会自动从jenkins的官网去更新插件。
+
+操作
+FROM jenkins/jenkins:lts
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
+
+##plugins.txt 的格式
+cucumber-testresult-plugin:0.8.2
+pam-auth:1.1
+matrix-project:1.4.1
+script-security:1.13
