@@ -1,8 +1,17 @@
 1、read
-
+ 1）全量读取
+ 2）结果是str
+ read([size])方法从文件当前位置起读取size个字节，若无参数size，则表示读取至文件结束为止，它范围为字符串对象
+ 
+ 例如
+ f = open("a.txt")
+lines = f.read()
+print lines
+print(type(lines))
+f.close()
 
 2、readlines
-  1）按行读取
+  1）按行读取，一次全部读完
   2）结果是一个list，每一行都是list中一个元素
   3）需要注意的是，文本末尾是否有\n，要记得去掉
   
@@ -15,3 +24,15 @@
 
 
 3、readline
+  1）按行读取，一次读一行，占用内存小，适合读取大文件
+  2）返回值为str
+  
+  
+  例如：
+  f = open("a.txt")
+line = f.readline()
+print(type(line))
+while line:
+    print line,
+    line = f.readline()
+f.close()
