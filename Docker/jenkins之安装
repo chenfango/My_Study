@@ -20,3 +20,7 @@ cucumber-testresult-plugin:0.8.2
 pam-auth:1.1
 matrix-project:1.4.1
 script-security:1.13
+
+
+jenkins镜像的官网链接
+https://hub.docker.com/r/jenkins/jenkins/tags
