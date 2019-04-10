@@ -1,0 +1,12 @@
+https://stackoverflow.com/questions/51170209/jenkins-launch-method-launch-slave-agents-via-ssh-missing
+
+解决方法
+
+在插件里添加
+ JDK-Tools Plugin
+ 插件链接：https://plugins.jenkins.io/jdk-tool
+ 
+ 
+ 如果使用java11的话，还需要使用JAXB插件
+ 
+ 
