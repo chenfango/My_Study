@@ -1,0 +1,7 @@
+jenkins迁移后，job构建会有报错java.nio.file.DirectoryNotEmptyException
+
+解决方法：
+将所有的job的lastSuccessful 和 lastStable文件删除
+
+参考链接
+https://blog.csdn.net/u010880009/article/details/78281728
