@@ -1,0 +1,19 @@
+0、jenkins的新版本镜像制作
+
+1、将原先jenkins目录予以迁移，不然会有数据进行干扰尤其是插件
+
+2、迁移如下目录
+config.xml
+jobs
+
+3、手动调整config.xml的所有配置项
+
+4、手动挂载node的配置项
+
+5、调整脚本中token情况
+
+jenkins 的API token 变化，所有脚本不可用
+
+harbor token 不可用，需要调整
+
+6、删除所有job的lastSuccessful和lastStable
