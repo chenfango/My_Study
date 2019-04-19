@@ -1,0 +1,14 @@
+1、	问题描述
+新版本jenkins中使用cloud——“Docker”启动了docker-slave，但是不执行任务，一直不断的触发新的docker-slave的生成，直到配置的docker-slave的配置数耗尽
+2、	确认配置
+对比两边的config.xml文件以及启动的镜像的log
+均无异常，缺少实际执行的任务
+3、	日志查询
+jenkins的系统日志
+4、问题查询，相关网址
+https://issues.jenkins-ci.org/browse/JENKINS-50480?page=com.atlassian.jira.plugin.system.issuetabpanels%3Aall-tabpanel
+
+https://github.com/jenkinsci/docker-plugin/pull/619/
+https://github.com/jenkinsci/jenkins/releases
+ 
+https://ci.jenkins.io/job/Plugins/job/docker-plugin/job/master/
