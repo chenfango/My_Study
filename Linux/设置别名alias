@@ -1,0 +1,9 @@
+用法
+alias 新的命令='原命令 -选项/参数'
+
+配置
+将如上的语句配置在.bashrc中
+或者在/etc/bashrc中，然后再.bashrc中引用，如下
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
