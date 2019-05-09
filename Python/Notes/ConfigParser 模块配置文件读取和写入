@@ -1,0 +1,61 @@
+import ConfigParser
+
+
+以section表示某一段
+值以key 和vaule的方式实现
+https://www.jianshu.com/p/f393d3fbeebf
+
+范例：
+[DEFAULT]
+serveraliveinterval = 45
+compression = yes
+compressionlevel = 9
+
+[bitbucket]
+user = kk
+
+[topsecrect]
+port = 22
+
+写入：
+config = configparser.ConfigParser()
+config['DEFAULT'] = {'serveraliveinterval' : '4',
+                     'compression' : 'yes',
+                     'compressionlevel' : '9'}
+
+config['bitbucket'] = {}
+config['bitbucket']['user'] = 'kk'
+
+config['topsecrect'] = {}
+topsecrect = config['topsecrect']
+
+topsecrect['port'] = '22'
+
+with open('example.ini', 'w') as configfile:
+    config.write(configfile)
+    
+  方法二：
+config = configparser.ConfigParser()
+config.add_section('Section1')
+config.set('Section1', 'an_int', '15')
+config.set('Section1', 'a_bool', 'true')
+config.set('Section1', 'a_float', '3.1415')
+config.set('Section1', 'baz', 'fun')
+config.set('Section1', 'bar', 'Python')
+config.set('Section1', 'foo', '%(bar)s is %(baz)s!')
+with open('example.cfg', 'wb') as configfile:
+    config.write(configfile)   
+  读取
+  import configparser
+
+config = configparser.ConfigParser()
+
+config.read('example.ini')
+
+for key in config['DEFAULT']:
+    print(key)
+    
+   修改
+>>> config_data.set('account', 'user_id', 20)
+>>> with open(config_file, 'wb') as config_file:
+...     config_data.write(config_file)
