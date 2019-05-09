@@ -1,0 +1,20 @@
+Python中的commands模块专门用于调用Linux shell命令，并返回状态和结果
+
+主要有以下两个函数
+ 1、commands.getoutput('shell command')
+ 返回执行结果
+ 
+ 2、commands.getstatusoutput('shell command')
+ 执行shell命令, 返回两个元素的元组tuple(status, result)，status为int类型，result为string类型
+ 
+ 
+ 
+ 
+ 1、os.system(CMD)无法获取执行结果
+ 
+ 2、os.popen(CMD)获取结果为字符串，需要自行对结果进行处理
+ 
+ 3、commands模块#可以很方便的取得命令的输出（包括标准和错误输出）和执行状态位
+ 
+ 4、使用subprocess模块可以创建新的进程，可以与新建进程的输入/输出/错误管道连通，并可以获得新建进程执行的返回状态。
+ 使用subprocess模块的目的是替代os.system()、os.popen*()、commands.*等旧的函数或模块。
