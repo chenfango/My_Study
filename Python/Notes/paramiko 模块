@@ -1,0 +1,22 @@
+作用：
+通过ssh 远程在其他客户端执行命令，并返回执行的标准输出结果
+
+paramiko的连接
+import paramiko
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect("某IP地址",22,"用户名", "口令")
+
+
+执行命令
+stdin,stdout,stderr = ssh.exec_command(cmd)
+
+sftp文件互相拷贝
+参考网址：https://www.jianshu.com/p/31409eb2585b
+
+transport = paramiko.Transport(('hostname', 22))
+transport.connect(username='root', password='111111')
+sftp = paramiko.SFTPClient.from_transport(transport)
+sftp.put('本地文件路径', '服务器路径')  #将文件上传到服务器
+sftp.get('服务器文件路径', '本地路径')   #将服务器上东西下载到本地路径
+transport.close()
