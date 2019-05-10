@@ -1,0 +1,7 @@
+接口data的返回值还含有中文时，默认为ASCII 编码，，中文为Unicode编码，
+
+所以在json.dumps() 里面加入 ensure_ascii = False,就OK啦
+
+
+例如：
+return json.dumps(result,ensure_ascii = False)
