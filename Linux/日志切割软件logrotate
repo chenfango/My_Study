@@ -1,2 +1,10 @@
 链接：https://linux.cn/article-4126-1.html
 
+
+操作的tips：
+
+1、首次要人工执行一遍，才会自动生效
+
+2、这个默认时间是走的/etc/anacrontab 目录下，如果要自定义时间要在crontab中设置（去掉原先的配置）
+40  22 * * * /usr/sbin/logrotate /etc/logrotate.d/aaa-fv  >/tmp/logro.log 2>&1
+
