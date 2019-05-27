@@ -32,3 +32,12 @@ sed 's/^/#/g' filename
 取消注释某几行
 
 sed 's/^#/^/g' filename
+
+
+在第一列之前添加某字符串
+
+sed 's/^/<strings>/g' filename
+
+在最后一行之后添加某字符串
+
+sed 's/$/<string>/g' filename
