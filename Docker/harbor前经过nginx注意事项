@@ -1,0 +1,21 @@
+当有多台harbor时候，往往使用nginx进行LB，
+
+1、这时候可能harbor的互联，或者harbor的docker pull 或者docker push 会有问题。
+
+解决方法：
+官网：
+https://github.com/goharbor/harbor/blob/master/docs/installation_guide.md#troubleshooting
+
+2.When setting up Harbor behind an nginx proxy or elastic load balancing, look for the line below, in common/config/nginx/nginx.conf and remove it from the sections if the proxy already has similar settings: location /, location /v2/ and location /service/.
+
+proxy_set_header X-Forwarded-Proto $scheme;
+and re-deploy Harbor refer to the previous section "Managing Harbor's lifecycle".
+
+注意：这里的re-deploy是重装，不是重启服务。
+
+
+2、经过LB要不要使用证书
+
+
+建议是harbor直接不用证书，在nginx中配置证书https://blog.frognew.com/2017/06/config-harbor-with-https-and-external-db.html
+
