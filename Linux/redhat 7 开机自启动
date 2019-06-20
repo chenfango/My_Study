@@ -1,0 +1,10 @@
+开机自启动添加方法：
+
+1、 服务直接添加开机自启动
+systemctl enable docker.service
+
+2、自定义脚本开机自启动
+
+将需要执行的命令或者脚本添加至/etc/rc.d/rc.local最后一行
+因为该路径权限被降低，所以需要将该文件添加执行权限
+chmod +x /etc/rc.d/rc.local
