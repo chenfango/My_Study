@@ -1,0 +1,7 @@
+查询单个tag 是否存在
+
+curl  http://<127.0.0.1>/api/repositories/<project name>/<repo name>/tags/<tag name>
+
+查询某个repo的所有tag
+
+curl  http://<127.0.0.1>/api/repositories/<project name>/<repo name>/tags
