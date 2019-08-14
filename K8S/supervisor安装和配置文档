@@ -1,0 +1,17 @@
+1、需要前置条件
+python 2.7.9 +
+
+2、拷贝相应的python文件（包含supervisor）
+
+3、配置
+./echo_supervisord_conf  > /etc/supervisord.conf ##echo_supervisord_conf是默认配置文件
+./supervisord -c /etc/supervisord.conf
+
+查看服务有无起来
+ps -ef | grep supervisord
+root     283826      1  0 15:00 ?        00:00:00 /wls/programs/python_2.7.9/bin/python ./supervisord -c /etc/supervisord.conf
+
+4、如需要添加什么程序在
+/etc/supervisord.conf
+
+参考文档：https://www.jianshu.com/p/bf2b3f4dec73
