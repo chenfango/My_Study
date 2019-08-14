@@ -1,5 +1,5 @@
 1、需要前置条件
-python 2.7.9 +
+python 2.7.9 +、mysql、redies
 
 2、拷贝相应的python文件（包含supervisor）
 
