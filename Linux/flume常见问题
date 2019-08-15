@@ -2,3 +2,12 @@ flume常见问题
 
 https://blog.csdn.net/arswbjeqnhiykz7229/article/details/78568588
 基本配置 4C 16G
+
+常见问题诊断查看metric
+curl http://127.0.0.1:34545/metrics | python -m json.tool
+
+其中端口自定义
+
+nohup $FLUME agent --conf $CONFIG_DIR  --conf-file $CONFIG --name agent -Dflume.monitoring.type=http -Dflume.monitoring.port=34545 &
+
+可以将启动写成脚本，如上行所示
