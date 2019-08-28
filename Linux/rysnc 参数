@@ -1,0 +1,8 @@
+1. 删除源文件
+--remove-source-files
+
+2. 排除某些文件
+--exclude
+
+3. 限制网速
+--bwlimit=500 ## 单位是KB
