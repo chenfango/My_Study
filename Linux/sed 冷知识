@@ -1,0 +1,13 @@
+
+amp1:~ # cat 3.txt  ##3.txt的内容
+hello hello hello  
+   hello  hello
+hello  hello hello
+
+
+
+amp1:~ # sed 's/hello/nihao/' 3.txt 
+nihao hello hello  
+   nihao  hello
+nihao  hello hello
+##不指定开头，也不加g，结果是匹配到一个符合的字段就直接跳到下一行
