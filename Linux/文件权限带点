@@ -1,0 +1,14 @@
+-rw-rw-r--.  1 user group    13767 12月 25 2014 index.html
+解释：
+开启了SELinux功能的Linux系统才会有这个点。
+那个点表示文件带有“SELinux的安全上下文”。
+CentOS7默认是开启SELinux的，所以会有这个点，
+如果关闭SELinux，然后再创建文件，新创建的文件就不会再有这个点了，
+但是以前创建的文件本来有这个点的还会显示这个点（虽然SELinux不起作用了）。
+
+参考下边命令应该能得到答案
+
+$info coreutils 'ls invocation'
+
+
+https://blog.51cto.com/928004321/1765123
