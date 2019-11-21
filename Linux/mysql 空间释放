@@ -1,6 +1,6 @@
 mysql的数据库占用空间较多时候有如下几种方式释放空间
 
-1、直接delete <table name>;
+1、直接truncate table <table name>;
 删除整个表
 ##此时数据无关重要
 
