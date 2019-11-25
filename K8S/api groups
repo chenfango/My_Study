@@ -1,0 +1,2 @@
+$ kubectl api-resources -o wide
+$ kubectl api-resources --api-group apps -o wide
