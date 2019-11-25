@@ -1,0 +1,96 @@
+https://www.cnblogs.com/g2thend/p/11836659.html
+
+#基本语法：
+1，大小写敏感
+2.使用缩进表示层级关系。
+3.缩进时不允许使用Tab键，只允许使用空格。（可以通过编译器将tab键设置成2个空格或者4个空格）
+4.缩进的空格数目不重要，只要相同层级的元素左侧对齐即可。（使用一个空格缩进，都使用一个。使用二个空格缩进，都使用二个），建议还是2个空格，这样好看些。
+5.# 表示注释，从这个字符一直到行尾，都会被解析器忽略。
+6.破折号后面跟一个空格（a dash and space）表示列表
+7.用冒号和空格表示键值对 key: value
+值的写法
+1. k: v：字面直接来写；2. 字符串默认不用加上单引号或者双引 号；
+""：双引号；不会转义字符串里面的特殊字符；特殊字符会作为本身想表示的意思  name: "idig8 \n com"：输出；idig8换行com
+
+''：单引号；会转义特殊字符，特殊字符最终只是一个普通的字符串数据 name: 'idig8\n com'：输出；idig8\n com①对象、Map（属性和值）（键值对）
+
+#yaml 格式
+map，散列表  字典
+使用冒号（：）表示键值对，同一缩进的所有键值对属于一个map
+
+①对象、Map（属性和值）（键值对）
+---是分隔符，是可选的，在单一文件中，可用连续三个连字号---区分多个文件
+有两个键：friends，他们对应的值分别是：lastName: zhangsan 和 age: 20
+②数组（List、Set）
+用- 值表示数组中的一个元素
+pets: 
+ - pig
+ - cat
+ - dog
+{
+"pets": ["pig","cat","dog"]
+}
+
+数组List和Map的混合
+person:
+    lastname: liming
+    age: 34
+    boss: false 
+    birth: 2019/08/03
+    maps: [k1: v1,k2: v2]
+    lists: 
+      - lizi
+      - zhaoliu 
+    dog:
+      name: 小狗
+      age: 10
+      
+  json  格式
+  { 
+     "person": { 
+         "lastname": "liming",
+         "age": 34,
+         "boss": false,
+         "birth": '2019/08/03',
+         "maps":  {
+             "k1": 'v1' , 
+             "k2": 12 
+             } ,
+         "lists": [ 
+             "lishi",
+             "xholiu"
+         ],
+         "dog": {
+            "name": '小狗',
+            "age": 10 
+          }
+     }
+  }
+  
+缩进相同的都是同级元素，缩进比上一个元素长就是上一个元素的子元素
+- apple1:
+  color: red
+- apple2:
+    color: green
+相同样式：
+- 
+  apple1:
+  color: red
+- 
+  apple2:
+  color: green
+
+json:
+[
+   {
+      "apple1": null,
+      "color": "red"
+   },
+   {
+      "apple2": null,
+      "olor": "green"
+   }
+]
+YAML 的纯量（Scalar）
+null
+~ / null / Null / NULL 还有空字符都被解析成 null 类型，最标准的写法是 ~。
