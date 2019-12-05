@@ -1,0 +1,57 @@
+背景：
+kube-prometheus的项目中grafana的dashboard数据是不可修改的，所以import的dashboars在pod 重启后就会消失。
+如下方案用于dashboard的持久化
+
+1、	在grafana的页面中保存原来的dashboard
+2、	创建pv 和 pvc
+# cat pv-dashboard.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  finalizers:
+  - kubernetes.io/pv-protection
+  labels:
+    app: grafana-dashboards
+  name: grafana-dashboards
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /lucloud_share/dashboards
+    type: ""
+  persistentVolumeReclaimPolicy: Retain
+#cat pvc-dashboard.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: "yes"
+    pv.kubernetes.io/bound-by-controller: "yes"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app: grafana-dashboards
+  name: grafana-dashboards
+  namespace: monitoring
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: grafana-dashboards
+3、	修改grafana的deployment
+# kubectl edit deployment -n monitoring grafana
+注释原来的
+-mountPath: /var/lib/grafana
+新增如下
+        - mountPath: /var/lib/grafana
+          name: lu-dashboard
+      - name: lu-dashboard
+        persistentVolumeClaim:
+          claimName: grafana-dashboards
+4、	导入step 1 保存的模板
+5、	验证，删除已经创建好的pod，查看是否带有原来的dashboard
+
