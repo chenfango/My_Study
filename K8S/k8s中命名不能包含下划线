@@ -1,0 +1,71 @@
+1、kubernetes在启动docker的容器会根据规定的字段，一般为如下的6个字段，进行拼接。而拼接是以下划线进行拼接“_”。
+
+                  
+
+                    2、如果我们的应用名中包含下划线，比如“bs_publish”,那kubernetes的启动容器名称为
+
+K8s_be_publish_ be_publish-xxxxxxxxxxx-xxxxx_b111_<podUID>_<restarttime>
+
+                  3、根据源代码中根据“_”进行分解，则分解出9个字段，与代码规定的字段数不匹配，所以无法处理，报422
+
+ 
+
+     
+
+         后续操作规范：
+
+1、  容器化应用，应用名不能包含下划线“_”
+
+2、  Kubernetes的环境中元素的命名不能包含“_”
+
+
+
+参考的url
+https://github.com/rootsongjc/kubernetes-handbook/blob/master/practice/monitor.md
+我们可以看到容器名称中包含如下几个字段，中间用下划线隔开，至少有6个字段，未来可能添加更多字段。
+
+下面的是四个基本字段。
+
+containerNamePrefix_containerName_PodFullName_PodUID
+所有kubernetes启动的容器的containerNamePrefix都是k8s。
+
+Kubernetes启动的docker容器的容器名称规范，下面以官方示例guestbook为例，Deployment 名为 frontend中启动的名为php-redis的docker容器的副本书为3。
+
+Deployment frontend的配置如下：
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  template:
+    metadata:
+      labels:
+        app: guestbook
+        tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: harbor-001.jimmysong.io/library/gb-frontend:v4
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        ports:
+        - containerPort: 80
+我们选取三个实例中的一个运行php-redis的docker容器。
+
+k8s_php-redis_frontend-2337258262-154p7_default_d8a2e2dd-3617-11e7-a4b0-ecf4bbe5d414_0
+containerNamePrefix：k8s
+containerName：php-redis
+podFullName：frontend-2337258262-154p7
+computeHash：154p7
+deploymentName：frontend
+replicaSetName：frontend-2337258262
+namespace：default
+podUID：d8a2e2dd-3617-11e7-a4b0-ecf4bbe5d414
+kubernetes容器命名规则解析，见下图所示。
+
