@@ -2,7 +2,7 @@
 kube-prometheus的项目中grafana的dashboard数据是不可修改的，所以import的dashboars在pod 重启后就会消失。
 如下方案用于dashboard的持久化
 
-1、	在grafana的页面中保存原来的dashboard
+1、	在grafana的页面中保存原来的dashboard和grafna的deployment
 2、	创建pv 和 pvc
 # cat pv-dashboard.yaml
 apiVersion: v1
