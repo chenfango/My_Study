@@ -1,21 +1,14 @@
+
+https://www.kancloud.cn/huyipow/devops/971148
+
 1、kubernetes在启动docker的容器会根据规定的字段，一般为如下的6个字段，进行拼接。而拼接是以下划线进行拼接“_”。
-
-                  
-
-                    2、如果我们的应用名中包含下划线，比如“bs_publish”,那kubernetes的启动容器名称为
-
+2、如果我们的应用名中包含下划线，比如“bs_publish”,那kubernetes的启动容器名称为
 K8s_be_publish_ be_publish-xxxxxxxxxxx-xxxxx_b111_<podUID>_<restarttime>
+3、根据源代码中根据“_”进行分解，则分解出9个字段，与代码规定的字段数不匹配，所以无法处理，报422 
 
-                  3、根据源代码中根据“_”进行分解，则分解出9个字段，与代码规定的字段数不匹配，所以无法处理，报422
-
- 
-
-     
-
-         后续操作规范：
+后续操作规范：
 
 1、  容器化应用，应用名不能包含下划线“_”
-
 2、  Kubernetes的环境中元素的命名不能包含“_”
 
 
