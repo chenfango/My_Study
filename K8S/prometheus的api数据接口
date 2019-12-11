@@ -1,0 +1,7 @@
+1、查看kubelet的数据接口
+
+prometheus-k8s-token-xmkd4 从sa=prometheus-k8s中获取
+
+token=`kubectl -n monitoring get secret prometheus-k8s-token-xmkd4 -o jsonpath={.data.token} | base64 -d`
+
+API：curl https://127.0.0.1:10250/metrics/cadvisor -k -H "Authorization: Bearer $token"
