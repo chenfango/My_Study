@@ -1,0 +1,1 @@
+token=`kubectl -n monitoring get secret prometheus-k8s-token-xmkd4 -o jsonpath={.data.token} | base64 -d`
