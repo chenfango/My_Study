@@ -1,0 +1,67 @@
+https://www.qikqiak.com/post/prometheus-operator-monitor-etcd/
+现在 Prometheus 访问 etcd 集群的证书已经准备好了，接下来创建 ServiceMonitor 对象即可（prometheus-serviceMonitorEtcd.yaml）
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: etcd-k8s
+  namespace: monitoring
+  labels:
+    k8s-app: etcd-k8s
+spec:
+  jobLabel: k8s-app
+  endpoints:
+  - port: port
+    interval: 30s
+    scheme: https
+    tlsConfig:
+      caFile: /etc/prometheus/secrets/etcd-certs/ca.crt
+      certFile: /etc/prometheus/secrets/etcd-certs/healthcheck-client.crt
+      keyFile: /etc/prometheus/secrets/etcd-certs/healthcheck-client.key
+      insecureSkipVerify: true
+  selector:
+    matchLabels:
+      k8s-app: etcd
+  namespaceSelector:
+    matchNames:
+    - kube-system
+上面我们在 monitoring 命名空间下面创建了名为 etcd-k8s 的 ServiceMonitor 对象，基本属性和前面章节中的一致，匹配 kube-system 这个命名空间下面的具有 k8s-app=etcd 这个 label 标签的 Service，jobLabel 表示用于检索 job 任务名称的标签，和前面不太一样的地方是 endpoints 属性的写法，配置上访问 etcd 的相关证书，endpoints 属性下面可以配置很多抓取的参数，比如 relabel、proxyUrl，tlsConfig 表示用于配置抓取监控数据端点的 tls 认证，由于证书 serverName 和 etcd 中签发的可能不匹配，所以加上了 insecureSkipVerify=true
+
+ServiceMonitor 创建完成了，但是现在还没有关联的对应的 Service 对象，所以需要我们去手动创建一个 Service 对象（prometheus-etcdService.yaml）：
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: etcd-k8s
+  namespace: kube-system
+  labels:
+    k8s-app: etcd
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: port
+    port: 2379
+    protocol: TCP
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: etcd-k8s
+  namespace: kube-system
+  labels:
+    k8s-app: etcd
+subsets:
+- addresses:
+  - ip: 10.151.30.57
+    nodeName: etc-master
+  ports:
+  - name: port
+    port: 2379
+    protocol: TCP
+我们这里创建的 Service 没有采用前面通过 label 标签的形式去匹配 Pod 的做法，因为前面我们说过很多时候我们创建的 etcd 集群是独立于集群之外的，
+这种情况下面我们就需要自定义一个 Endpoints，要注意 metadata 区域的内容要和 Service 保持一致，Service 的 clusterIP 设置为 None，
+对改知识点不太熟悉的，可以去查看我们前面关于 Service 部分的讲解。
+创建完成后，隔一会儿去 Prometheus 的 Dashboard 中查看 targets，便会有 etcd 的监控项了：
+
