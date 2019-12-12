@@ -1,0 +1,56 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  generation: 1
+  labels:
+    k8s-app: etcd-k8s
+  name: etcd-k8s
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 30s
+    port: port
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  jobLabel: k8s-app
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  selector:
+    matchLabels:
+      k8s-app: etcd
+----
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: etcd
+  name: etcd-k8s
+  namespace: kube-system
+spec:
+  clusterIP: None
+  ports:
+  - name: port
+    port: 2379
+    protocol: TCP
+    targetPort: 2379
+  sessionAffinity: None
+  type: ClusterIP
+----
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    k8s-app: etcd
+  name: etcd-k8s
+  namespace: kube-system
+subsets:
+- addresses:
+  - ip: <nodeIP>
+  - ip: <nodeIP>
+  - ip: <nodeIP>
+  ports:
+  - name: port
+    port: 2379
+    protocol: TCP
