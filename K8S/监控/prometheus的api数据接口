@@ -5,3 +5,9 @@ prometheus-k8s-token-xmkd4 从sa=prometheus-k8s中获取
 token=`kubectl -n monitoring get secret prometheus-k8s-token-xmkd4 -o jsonpath={.data.token} | base64 -d`
 
 API：curl https://127.0.0.1:10250/metrics/cadvisor -k -H "Authorization: Bearer $token"
+
+2、方式二
+使用PromQL的方式
+ http://prometheus.istio.jimmysong.io/api/v1/query?query=http_requests_total{job=%22kubernetes-nodes%22}
+ 
+ 注明：http_requests_total{job=%22kubernetes-nodes%22}为在prometheus的页面查询时候的中url栏的内容
