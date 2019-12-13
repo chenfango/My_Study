@@ -1,0 +1,3 @@
+本部分包含kubelet、api、controller-manage、grafana、coreDNS
+
+https://github.com/coreos/kube-prometheus/blob/master/kustomization.yaml
