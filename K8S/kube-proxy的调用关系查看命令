@@ -1,0 +1,6 @@
+iptables -t nat -L
+iptables -t filter -L
+iptables -t nat -S
+
+相关链接
+https://blog.csdn.net/WaltonWang/article/details/55236300
