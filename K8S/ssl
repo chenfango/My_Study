@@ -5,6 +5,8 @@ RED='\E[1;31m'
 RES='\E[0m'
 SCR=`cat ../env.yml | grep SCR | awk -F ':' '{print $2}' | sed 's/^[ \t]*//g'`
 
+
+
 HOME_DIR=$SCR/create_ssl
 SSL_DIR=$SCR/data/ssl
 
@@ -23,8 +25,51 @@ fi
 
 LIST=$SCR/env.yml
 
+
 new_KUBE_APISERVER=`cat $LIST | grep new_KUBE_APISERVER | awk -F ' ' '{print $2}' | sed 's/^[ \t]*//g'`
 export KUBE_APISERVER="$new_KUBE_APISERVER"
+
+
+生成ca证书
+
+# cat ca-config.json 
+{
+  "signing": {
+    "default": {
+      "expiry": "876000h"
+    },
+    "profiles": {
+      "kubernetes": {
+        "usages": [
+            "signing",
+            "key encipherment",
+            "server auth",
+            "client auth"
+        ],
+        "expiry": "87600h"
+      }
+    }
+  }
+}
+   
+# cat ca-csr.json
+{
+  "CN": "kubernetes",
+  "key": {
+	"algo": "rsa",
+	"size": 2048
+  },
+  "names": [
+	{
+	  "C": "CN",
+	  "ST": "BeiJing",
+	  "L": "BeiJing",
+	  "O": "k8s",
+	  "OU": "System"
+	}
+  ]
+}
+
 
 ## create CA for all ##
 if [ ! -f $SSL_DIR/ca-key.pem ];then
