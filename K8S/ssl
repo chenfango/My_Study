@@ -62,8 +62,8 @@ export KUBE_APISERVER="$new_KUBE_APISERVER"
   "names": [
 	{
 	  "C": "CN",
-	  "ST": "BeiJing",
-	  "L": "BeiJing",
+	  "ST": "ShangHai",
+	  "L": "ShangHai",
 	  "O": "k8s",
 	  "OU": "System"
 	}
