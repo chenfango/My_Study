@@ -70,15 +70,15 @@ export KUBE_APISERVER="$new_KUBE_APISERVER"
   ]
 }
 
-
+# cat kubernetes-csr.json
 {
     "CN": "kubernetes",
     "hosts": [
       "127.0.0.1",
-      "172.23.18.139",
-      "172.23.18.140",
-      "172.23.18.141",
-      "192.168.0.1",
+      "172.23.18.139", #master和etcd机器的地址
+      "172.23.18.140", #master和etcd机器的地址
+      "172.23.18.141", #master和etcd机器的地址
+      "192.168.0.1",   ##pod 段的第一个地址
       "kubernetes.default",
       "kubernetes.default.svc",
       "kubernetes.default.svc.cluster",
@@ -99,6 +99,34 @@ export KUBE_APISERVER="$new_KUBE_APISERVER"
     ]
 }
 
+#cat etcd-csr.json
+{
+    "CN": "etcd",
+    "hosts": [
+        "127.0.0.1",
+        "kubeapi-gw.lufax.tool",
+	"172.23.18.139", #master和etcd机器的地址
+        "172.23.18.140", #master和etcd机器的地址
+        "172.23.18.141", #master和etcd机器的地址
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "ST": "Shanghai",
+            "L": "Shanghai",
+            "O": "lu",
+            "OU": "LuSystem"
+        }
+    ]
+}
+
+
+
+#需要先进行安装cfssl、kubectl、
 
 ## create CA for all ##
 if [ ! -f $SSL_DIR/ca-key.pem ];then
