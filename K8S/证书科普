@@ -2,4 +2,74 @@ https://www.cnblogs.com/LangXian/p/11282986.html
 
 生成证书过程：
 
-生成
+原理：
+
+step0：下载cfssl的工具:
+
+step1：
+
+生成config.json文件，
+该文件用于CA证书的过期时间、使用场景等参数；
+
+cfssl print-defaults config > config.json
+
+cat > ca-config.json <<EOF
+{
+  "signing": {
+    "default": { 
+      "expiry": "876000h"   ##100年有效
+    },
+    "profiles": {
+      "kubernetes": {
+        "usages": [
+            "signing",           ##表示该证书可用于签名其它证书；生成的 ca.pem 证书中 CA=TRUE；
+            "key encipherment",  
+            "server auth",      ##表示server可以用该 CA 对server提供的证书进行验证；
+            "client auth"       ##表示client可以用该 CA 对server提供的证书进行验证；
+        ],
+        "expiry": "87600h"
+      }
+    }
+  }
+}
+EOF
+
+Step2：
+生成csr的请求模板
+#cfssl print-defaults csr > csr.json 
+"CN"：Common Name，kube-apiserver 从证书中提取该字段作为请求的用户名 (User Name)
+"O"：Organization，kube-apiserver 从证书中提取该字段作为请求用户所属的组 (Group)<br>CN: Common Name，
+浏览器使用该字段验证网站是否合法，一般写的是域名。非常重要。浏览器使用该字段验证网站是否合法<br>C: Country， 国家<br>L: Locality，地区，城市<br>
+O: Organization Name，组织名称，公司名称<br>OU: Organization Unit Name，组织单位名称，公司部门<br>ST: State，州，省
+
+cat ca-csr.json
+{
+　　"CN": "kubernetes",
+　　"key": {
+　　　　"algo": "rsa",
+　　　　"size": 2048
+　　},
+　　"names": [
+　　　　{
+　　　　　　"C": "CN",
+　　　　　　"ST": "Shanghai",
+　　　　　　"L": "Shanghai",
+　　　　　　"O": "k8s",
+　　　　　　"OU": "System"
+　　　　}
+　　　],
+　　　"ca": {
+　　　　"expiry": "87600h"
+　　}
+}
+
+
+Step 3 ：生成ca证书
+
+/usr/local/bin/cfssl gencert -initca $HOME_DIR/conf/ca-csr.json | cfssljson -bare ca
+
+
+
+Step4：根据ca证书签发admin证书
+/usr/local/bin/cfssl gencert -ca=$SSL_DIR/ca.pem -ca-key=$SSL_DIR/ca-key.pem -config=$HOME_DIR/conf/ca-config.json -profile=kubernetes $HOME_DIR/conf/admin-csr.json | cfssljson -bare admin
+
