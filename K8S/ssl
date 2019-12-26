@@ -71,6 +71,35 @@ export KUBE_APISERVER="$new_KUBE_APISERVER"
 }
 
 
+{
+    "CN": "kubernetes",
+    "hosts": [
+      "127.0.0.1",
+      "172.23.18.139",
+      "172.23.18.140",
+      "172.23.18.141",
+      "192.168.0.1",
+      "kubernetes.default",
+      "kubernetes.default.svc",
+      "kubernetes.default.svc.cluster",
+      "kubernetes.default.svc.cluster.local"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "ST": "ShangHai",
+            "L": "ShangHai",
+            "O": "k8s",
+            "OU": "System"
+        }
+    ]
+}
+
+
 ## create CA for all ##
 if [ ! -f $SSL_DIR/ca-key.pem ];then
 	cd $HOME_DIR
