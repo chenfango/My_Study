@@ -1,0 +1,10 @@
+解决问题
+
+
+.gz文件利用gunzip 或者gzip -d 时报错gzip: unexpected end of file 
+
+此时利用zcat 显示即可
+
+zcat  xxx.gz
+
+
